@@ -32,6 +32,8 @@ module.exports = function(config) {
       // endbower
       <!-- injector:js -->
       './app/scripts/common/appSettings.js',
+      './app/scripts/common/filter.js',
+      './app/scripts/common/pagedData.js',
       './app/scripts/emails/email.js',
       './app/scripts/emails/emailsApi.js',
       './app/scripts/emails/emailsLoader.js',

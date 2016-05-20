@@ -10,7 +10,9 @@
 ///<!-- inject:ts -->
 /// <reference path="app.ts" />
 /// <reference path="common/appSettings.ts" />
+/// <reference path="common/filter.ts" />
 /// <reference path="common/module.ts" />
+/// <reference path="common/pagedData.ts" />
 /// <reference path="emails/email.ts" />
 /// <reference path="emails/emailsApi.ts" />
 /// <reference path="emails/emailsLoader.ts" />
