@@ -23,8 +23,15 @@ module.exports = function(config) {
     files: [
       "test/phantomjs-fix.js",
       // bower:js
+      'app/components/jquery/dist/jquery.js',
+      'app/components/angular/angular.js',
+      'app/components/angular-animate/angular-animate.js',
+      'app/components/bootstrap/dist/js/bootstrap.js',
+      'app/components/angular-bootstrap/ui-bootstrap-tpls.js',
+      'app/components/angular-mocks/angular-mocks.js',
       // endbower
       <!-- injector:js -->
+      './app/scripts/app.js',
       <!-- endinjector -->
       "test/mock/**/*.js",
       "test/spec/**/factory.js",

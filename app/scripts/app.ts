@@ -3,4 +3,7 @@
 module Test {
     'use strict';
 
+    angular
+        .module('test', [])
+    ;
 }

@@ -63,8 +63,6 @@ module.exports = function (grunt) {
     wiredep: {
       options: {
         exclude: [
-          'components/textAngular/dist/textAngular-sanitize.js',
-          'components/bootstrap-datepicker/dist/css/bootstrap-datepicker.css'
         ],
         "overrides": {
           "bootstrap": {
@@ -72,31 +70,6 @@ module.exports = function (grunt) {
               "dist/js/bootstrap.js",
               "dist/css/bootstrap.css",
               "less/bootstrap.less"
-            ]
-          },
-          "jquery-ui": {
-            "main": [
-              "themes/base/core.css",
-              "themes/base/resizable.css",
-              "jquery-ui.js"
-            ]
-          },
-          "font-awesome": {
-            "main": [
-              "css/font-awesome.css"
-            ]
-          },
-          "ngprogress": {
-            "main": [
-              "ngProgress.css",
-              "build/ngprogress.js"
-            ]
-          },
-          "bootstrap-tagsinput": {
-            "main": [
-              "dist/bootstrap-tagsinput.js",
-              "dist/bootstrap-tagsinput-angular.js",
-              "dist/bootstrap-tagsinput.css"
             ]
           }
         }
