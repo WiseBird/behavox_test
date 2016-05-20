@@ -1,8 +1,8 @@
 /// <reference path="tsd.d.ts" />
-var Test;
-(function (Test) {
-    'use strict';
-    angular
-        .module('test', []);
-})(Test || (Test = {}));
+'use strict';
+angular
+    .module('test', [
+    'test.common',
+    'test.emails'
+]);
 //# sourceMappingURL=app.js.map

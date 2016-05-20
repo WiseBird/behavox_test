@@ -1,9 +1,10 @@
 /// <reference path="tsd.d.ts" />
 
-module Test {
-    'use strict';
+'use strict';
 
-    angular
-        .module('test', [])
-    ;
-}
+angular
+    .module('test', [
+        'test.common',
+        'test.emails'
+    ])
+;

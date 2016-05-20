@@ -31,6 +31,12 @@ module.exports = function(config) {
       'app/components/angular-mocks/angular-mocks.js',
       // endbower
       <!-- injector:js -->
+      './app/scripts/common/appSettings.js',
+      './app/scripts/emails/email.js',
+      './app/scripts/emails/emailsApi.js',
+      './app/scripts/emails/emailsLoader.js',
+      './app/scripts/common/module.js',
+      './app/scripts/emails/module.js',
       './app/scripts/app.js',
       <!-- endinjector -->
       "test/mock/**/*.js",

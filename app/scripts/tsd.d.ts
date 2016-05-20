@@ -9,4 +9,10 @@
 
 ///<!-- inject:ts -->
 /// <reference path="app.ts" />
+/// <reference path="common/appSettings.ts" />
+/// <reference path="common/module.ts" />
+/// <reference path="emails/email.ts" />
+/// <reference path="emails/emailsApi.ts" />
+/// <reference path="emails/emailsLoader.ts" />
+/// <reference path="emails/module.ts" />
 ///<!-- endinject -->

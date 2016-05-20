@@ -41,7 +41,7 @@ module.exports = function (grunt) {
           open: true,
           middleware: function (connect) {
             return [
-              connect.static(appPaths.app)
+              connect.static('app')
             ];
           }
         }
@@ -52,7 +52,7 @@ module.exports = function (grunt) {
           middleware: function (connect) {
             return [
               connect.static('test'),
-              connect.static(appPaths.app)
+              connect.static('app')
             ];
           }
         }
