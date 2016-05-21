@@ -9,10 +9,6 @@ module Test.Emails {
         private dateTo: Date;
 
         private users: string[];
-        private usersFrom: string[];
-        private usersTo: string[];
-        private usersCc: string[];
-        private usersBcc: string[];
 
         byTest(text: string): this & EmailsFilter {
             this.text = text;
@@ -32,36 +28,20 @@ module Test.Emails {
             this.users = users;
             return this;
         }
-        byUsersFrom(usersFrom: string[]): this & EmailsFilter {
-            this.usersFrom = usersFrom;
-            return this;
-        }
-        byUsersTo(usersTo: string[]): this & EmailsFilter {
-            this.usersTo = usersTo;
-            return this;
-        }
-        byUsersCc(usersCc: string[]): this & EmailsFilter {
-            this.usersCc = usersCc;
-            return this;
-        }
-        byUsersBcc(usersBcc: string[]): this & EmailsFilter {
-            this.usersBcc = usersBcc;
-            return this;
-        }
 
         private subjectToText(email: Email): boolean {
             if(!this.text) {
                 return true;
             }
 
-            return email.subject.indexOf(this.text) !== -1;
+            return email.subject.toLowerCase().indexOf(this.text.toLowerCase()) !== -1;
         }
         private bodyToText(email: Email): boolean {
             if(!this.text) {
                 return true;
             }
 
-            return email.body.indexOf(this.text) !== -1;
+            return email.body.toLowerCase().indexOf(this.text.toLowerCase()) !== -1;
         }
 
         private fromToUsers(email: Email): boolean {

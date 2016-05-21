@@ -23,33 +23,17 @@ var Test;
                 this.users = users;
                 return this;
             };
-            EmailsFilter.prototype.byUsersFrom = function (usersFrom) {
-                this.usersFrom = usersFrom;
-                return this;
-            };
-            EmailsFilter.prototype.byUsersTo = function (usersTo) {
-                this.usersTo = usersTo;
-                return this;
-            };
-            EmailsFilter.prototype.byUsersCc = function (usersCc) {
-                this.usersCc = usersCc;
-                return this;
-            };
-            EmailsFilter.prototype.byUsersBcc = function (usersBcc) {
-                this.usersBcc = usersBcc;
-                return this;
-            };
             EmailsFilter.prototype.subjectToText = function (email) {
                 if (!this.text) {
                     return true;
                 }
-                return email.subject.indexOf(this.text) !== -1;
+                return email.subject.toLowerCase().indexOf(this.text.toLowerCase()) !== -1;
             };
             EmailsFilter.prototype.bodyToText = function (email) {
                 if (!this.text) {
                     return true;
                 }
-                return email.body.indexOf(this.text) !== -1;
+                return email.body.toLowerCase().indexOf(this.text.toLowerCase()) !== -1;
             };
             EmailsFilter.prototype.fromToUsers = function (email) {
                 if (!this.users || !this.users.length) {
