@@ -29,6 +29,7 @@ module.exports = function(config) {
       'app/components/bootstrap/dist/js/bootstrap.js',
       'app/components/angular-bootstrap/ui-bootstrap-tpls.js',
       'app/components/angular-ui-router/release/angular-ui-router.js',
+      'app/components/ngInfiniteScroll/build/ng-infinite-scroll.js',
       'app/components/angular-mocks/angular-mocks.js',
       // endbower
       <!-- injector:js -->

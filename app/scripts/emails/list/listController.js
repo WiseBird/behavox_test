@@ -11,12 +11,29 @@ var Test;
                 this.$state = $state;
                 this.emailsApi = emailsApi;
                 this.filter = filter;
-                this.$scope.$watch(function () { return _this.filter; }, function () {
-                    _this.emails = _this.emailsApi.find(filter, 1, 20).items;
-                }, true);
+                this.$scope.$watch(function () { return _this.filter; }, this.reloadEmails.bind(this), true);
             }
+            ListController.prototype.reloadEmails = function () {
+                this.emails = this.loadEmails();
+            };
+            ListController.prototype.loadEmails = function (page) {
+                if (page === void 0) { page = 1; }
+                var data = this.emailsApi.find(this.filter, page, 20);
+                this.pagination = data.pagination;
+                return data.items;
+            };
             ListController.prototype.openEmail = function (email) {
                 this.$state.go('emails.view', { id: email.id });
+            };
+            ListController.prototype.canLoadNextPage = function () {
+                return this.pagination && this.pagination.page < this.pagination.pages;
+            };
+            ListController.prototype.loadNextPage = function () {
+                if (!this.canLoadNextPage()) {
+                    return;
+                }
+                var newEmails = this.loadEmails(this.pagination.page + 1);
+                this.emails.push.apply(this.emails, newEmails);
             };
             return ListController;
         })();

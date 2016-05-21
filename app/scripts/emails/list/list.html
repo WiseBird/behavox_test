@@ -1,8 +1,12 @@
 <div ng-controller="test.emails.listController as listController">
     <h1 class="page-header">Emails</h1>
 
-    <test-emails-short-view ng-repeat="email in listController.emails"
-                            email="email"
-                            ng-click="listController.openEmail(email)">
-    </test-emails-short-view>
+    <div infinite-scroll="listController.loadNextPage()"
+         infinite-scroll-immediate-check="false"
+         infinite-scroll-disabled="!listController.canLoadNextPage()">
+        <test-emails-short-view ng-repeat="email in listController.emails"
+                                email="email"
+                                ng-click="listController.openEmail(email)">
+        </test-emails-short-view>
+    </div>
 </div>

@@ -108,10 +108,12 @@ var Test;
                     return ind >= (page - 1) * limit && ind < page * limit;
                 });
                 return {
-                    limit: limit,
-                    page: page,
-                    pages: Math.ceil(emails.length / limit),
-                    total: emails.length,
+                    pagination: {
+                        limit: limit,
+                        page: page,
+                        pages: Math.ceil(emails.length / limit),
+                        total: emails.length
+                    },
                     items: itemsOnPage
                 };
             };

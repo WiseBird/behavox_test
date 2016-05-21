@@ -105,7 +105,7 @@ module Test.Emails {
         setData(emails: Email[]);
         ready(): ng.IPromise<any>;
 
-        find(filter: EmailsFilter, page: number, limit: number): Test.Common.IPagedDataDto<Email>;
+        find(filter: EmailsFilter, page: number, limit: number): Test.Common.IPagedData<Email>;
         getById(id: number): Email;
     }
 
@@ -126,7 +126,7 @@ module Test.Emails {
             this.defer.resolve(null);
         }
 
-        find(filter: EmailsFilter, page: number, limit: number): Test.Common.IPagedDataDto<Email> {
+        find(filter: EmailsFilter, page: number, limit: number): Test.Common.IPagedData<Email> {
             if(!filter) {
                 throw new Error('filter is missing');
             }
@@ -138,10 +138,12 @@ module Test.Emails {
             });
 
             return {
-                limit: limit,
-                page: page,
-                pages: Math.ceil(emails.length / limit),
-                total: emails.length,
+                pagination: {
+                    limit: limit,
+                    page: page,
+                    pages: Math.ceil(emails.length / limit),
+                    total: emails.length
+                },
 
                 items: itemsOnPage
             };

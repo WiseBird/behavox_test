@@ -4,6 +4,7 @@ angular
     .module('test', [
     'ui.router',
     //'ui.bootstrap',
+    'infinite-scroll',
     'test.common',
     'test.emails'
 ]);
