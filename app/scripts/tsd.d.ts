@@ -10,11 +10,18 @@
 ///<!-- inject:ts -->
 /// <reference path="app.ts" />
 /// <reference path="common/appSettings.ts" />
-/// <reference path="common/filter.ts" />
 /// <reference path="common/module.ts" />
 /// <reference path="common/pagedData.ts" />
+/// <reference path="common/routingConfig.ts" />
+/// <reference path="emails/common/filterService.ts" />
 /// <reference path="emails/email.ts" />
 /// <reference path="emails/emailsApi.ts" />
 /// <reference path="emails/emailsLoader.ts" />
+/// <reference path="emails/list/listController.ts" />
+/// <reference path="emails/list/listSideBarController.ts" />
 /// <reference path="emails/module.ts" />
+/// <reference path="emails/view/fullViewDirective.ts" />
+/// <reference path="emails/view/shortViewDirective.ts" />
+/// <reference path="emails/view/viewController.ts" />
+/// <reference path="emails/view/viewSideBarController.ts" />
 ///<!-- endinject -->

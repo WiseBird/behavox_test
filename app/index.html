@@ -13,10 +13,31 @@
     <!-- endbower -->
 
     <link rel="stylesheet" href="styles/main.css" />
+    <link rel="stylesheet" href="styles/emails.css" />
   </head>
   <body>
 
-    <div ui-view="" class="container-fluid wrapper"></div>
+  <nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a href="#" class="navbar-brand">Behavox test</a>
+      </div>
+      <div class="navbar-collapse collapse" id="navbar">
+
+      </div>
+    </div>
+  </nav>
+
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-sm-3 col-md-2 sidebar">
+        <div ui-view="sidebar"></div>
+      </div>
+      <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+        <div ui-view=""></div>
+      </div>
+    </div>
+  </div>
 
     <!-- bower:js -->
     <script src="components/jquery/dist/jquery.js"></script>
@@ -24,12 +45,20 @@
     <script src="components/angular-animate/angular-animate.js"></script>
     <script src="components/bootstrap/dist/js/bootstrap.js"></script>
     <script src="components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+    <script src="components/angular-ui-router/release/angular-ui-router.js"></script>
     <!-- endbower -->
 
     <!-- injector:js -->
+    <script src="scripts/emails/common/filterService.js"></script>
+    <script src="scripts/emails/list/listController.js"></script>
+    <script src="scripts/emails/list/listSideBarController.js"></script>
+    <script src="scripts/emails/view/fullViewDirective.js"></script>
+    <script src="scripts/emails/view/shortViewDirective.js"></script>
+    <script src="scripts/emails/view/viewController.js"></script>
+    <script src="scripts/emails/view/viewSideBarController.js"></script>
     <script src="scripts/common/appSettings.js"></script>
-    <script src="scripts/common/filter.js"></script>
     <script src="scripts/common/pagedData.js"></script>
+    <script src="scripts/common/routingConfig.js"></script>
     <script src="scripts/emails/email.js"></script>
     <script src="scripts/emails/emailsApi.js"></script>
     <script src="scripts/emails/emailsLoader.js"></script>

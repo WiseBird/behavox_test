@@ -7,7 +7,7 @@ module Test.Emails {
         '$http',
         'test.common.appSetings',
         'test.emails.api',
-        function ($http: ng.IHttpService, appSetings: Common.IAppSettings, emailsApi: IEmailsApi) {
+        function ($http: ng.IHttpService, appSetings: Test.Common.IAppSettings, emailsApi: IEmailsApi) {
             $http.get(appSetings.dataUrl).then((response: ng.IHttpPromiseCallbackArg<IEmailDTO[]>) => {
                 var emails = response.data.map(x => Email.fromDTO(x));
                 emailsApi.setData(emails);

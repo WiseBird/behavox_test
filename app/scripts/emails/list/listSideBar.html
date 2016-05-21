@@ -1,0 +1,15 @@
+<div class="emails-list-sidebar" ng-controller="test.emails.listSideBarController as listSideBarController">
+	<h2>Filter</h2>
+	<form>
+		<div class="form-group">
+			<label for="search_text">Text</label>
+			<input type="text" class="form-control" id="search_text" placeholder="Text"
+				   ng-model="listSideBarController.filter.text">
+		</div>
+		<div class="form-group">
+			<label for="user">User</label>
+			<input type="text" class="form-control" id="user" placeholder="User"
+				   ng-model="listSideBarController.user">
+		</div>
+	</form>
+</div>
