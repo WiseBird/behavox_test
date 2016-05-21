@@ -17,3 +17,52 @@
 .emails-full-view .emails-full-view_body {
     margin-top: 10px;
 }
+
+
+.emails-short-view {
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none;   /* Chrome/Safari/Opera */
+    -khtml-user-select: none;    /* Konqueror */
+    -moz-user-select: none;      /* Firefox */
+    -ms-user-select: none;       /* Internet Explorer/Edge */
+    user-select: none;           /* Non-prefixed version, currently
+                                  not supported by any browser */
+    cursor: pointer;
+}
+.emails-short-view:hover {
+    box-shadow: 0px 0px 3px 1px grey;
+}
+
+.emails-short-view .emails-short-view_subject {
+    font-size: 16px;
+    margin-bottom: 5px;
+
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+.emails-short-view .emails-short-view_date {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.emails-short-view .emails-short-view_from{
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.emails-short-view .emails-short-view_recipients {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.emails-short-view .emails-short-view_body {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+
+    margin-top: 10px;
+}

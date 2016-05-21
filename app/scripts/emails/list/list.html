@@ -1,24 +1,8 @@
 <div ng-controller="test.emails.listController as listController">
     <h1 class="page-header">Emails</h1>
 
-    <div class="table-responsive">
-        <table class="table table-striped">
-            <thead>
-            <tr>
-                <th>Date</th>
-                <th>From</th>
-                <th>To</th>
-                <th>Subject</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr ng-repeat="email in listController.emails" ng-click="listController.openEmail(email)">
-                <td>{{ email.date | date:"yyyy/MM/dd 'at' h:mma" }}</td>
-                <td>{{ email.from }}</td>
-                <td>{{ email.to }}</td>
-                <td>{{ email.subject }}</td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
+    <test-emails-short-view ng-repeat="email in listController.emails"
+                            email="email"
+                            ng-click="listController.openEmail(email)">
+    </test-emails-short-view>
 </div>

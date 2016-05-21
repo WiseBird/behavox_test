@@ -4,7 +4,7 @@ module Test.Emails {
     'use strict';
 
     interface IFullViewDirectiveScope extends ng.IScope {
-        fullViewController: UsersListDirectiveController;
+        fullViewController: FullViewDirectiveController;
     }
 
     class FullViewDirectiveController {

@@ -90,7 +90,7 @@ var Test;
                 this.emails = [];
             }
             EmailsApi.prototype.setData = function (emails) {
-                this.emails = emails;
+                this.emails.push.apply(this.emails, emails);
             };
             EmailsApi.prototype.find = function (filter, page, limit) {
                 if (!filter) {

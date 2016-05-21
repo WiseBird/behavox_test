@@ -8,5 +8,6 @@ angular
     .controller('test.emails.viewController', Test.Emails.viewControllerRegistration)
     .controller('test.emails.viewSideBarController', Test.Emails.viewSideBarControllerRegistration)
     .directive('testEmailsFullView', Test.Emails.fullViewDirectiveRegistration)
+    .directive('testEmailsShortView', Test.Emails.shortViewDirectiveRegistration)
     .run(Test.Emails.emailsLoaderRunConfig);
 //# sourceMappingURL=module.js.map

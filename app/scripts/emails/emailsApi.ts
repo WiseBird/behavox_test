@@ -112,7 +112,7 @@ module Test.Emails {
         private emails: Email[] = [];
 
         setData(emails: Email[]) {
-            this.emails = emails;
+            this.emails.push.apply(this.emails, emails);
         }
 
         find(filter: EmailsFilter, page: number, limit: number): Test.Common.IPagedDataDto<Email> {
