@@ -1,0 +1,28 @@
+<div class="emails-full-view panel panel-default">
+    <div class="panel-heading">
+        <div class="emails-full-view_subject">{{ fullViewController.email.subject }}</div>
+        <div class="emails-full-view_date">
+            {{ fullViewController.email.date | date:"yyyy/MM/dd 'at' h:mma" }}
+        </div>
+    </div>
+    <div class="panel-body">
+        <div class="emails-full-view_from">
+            {{ fullViewController.email.from }}
+        </div>
+        <div class="emails-full-view_recipients">
+            To: {{ fullViewController.email.to }}
+        </div>
+        <div class="emails-full-view_recipients"
+             ng-if="fullViewController.email.cc && fullViewController.email.cc.length">
+            Cc: {{ fullViewController.email.cc }}
+        </div>
+        <div class="emails-full-view_recipients"
+             ng-if="fullViewController.email.bcc && fullViewController.email.bcc.length">
+            Bcc: {{ fullViewController.email.bcc }}
+        </div>
+
+        <div class="emails-full-view_body">
+            {{ fullViewController.email.body }}
+        </div>
+    </div>
+</div>

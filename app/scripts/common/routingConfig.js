@@ -25,6 +25,18 @@ var Test;
                             templateUrl: 'scripts/emails/list/list.html'
                         }
                     }
+                })
+                    .state("emails.view", {
+                    parent: 'emails',
+                    url: '/:id',
+                    views: {
+                        "sidebar@": {
+                            templateUrl: 'scripts/emails/view/viewSideBar.html'
+                        },
+                        "": {
+                            templateUrl: 'scripts/emails/view/view.html'
+                        }
+                    }
                 });
                 $urlRouterProvider.otherwise("/emails");
             }

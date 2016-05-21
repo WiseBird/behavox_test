@@ -5,16 +5,19 @@ var Test;
     (function (Emails) {
         'use strict';
         var ViewController = (function () {
-            function ViewController($scope, emailApi, filter) {
-                //this.email = this.emailApi.getById(1);
+            function ViewController($scope, $stateParams, emailApi, filter) {
                 this.$scope = $scope;
+                this.$stateParams = $stateParams;
                 this.emailApi = emailApi;
                 this.filter = filter;
+                var emailId = Number(this.$stateParams.id);
+                this.email = this.emailApi.getById(emailId);
             }
             return ViewController;
         })();
         Emails.viewControllerRegistration = [
             '$scope',
+            '$stateParams',
             'test.emails.api',
             'test.emails.filter',
             ViewController];

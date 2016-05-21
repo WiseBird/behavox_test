@@ -95,8 +95,8 @@ module Test.Emails {
 
         filter(emails: Email[]): Email[] {
             return emails.filter((email) => {
-                return this.bodyToText(email) && this.subjectToText(email) &&
-                    this.fromToUsers(email) && this.toToUsers(email) && this.ccToUsers(email) && this.bccToUsers(email);
+                return (this.bodyToText(email) || this.subjectToText(email)) &&
+                    (this.fromToUsers(email) || this.toToUsers(email) || this.ccToUsers(email) || this.bccToUsers(email));
             });
         }
     }
@@ -105,6 +105,7 @@ module Test.Emails {
         setData(emails: Email[]);
 
         find(filter: EmailsFilter, page: number, limit: number): Test.Common.IPagedDataDto<Email>;
+        getById(id: number): Email;
     }
 
     class EmailsApi implements IEmailsApi {
@@ -133,6 +134,15 @@ module Test.Emails {
 
                 items: itemsOnPage
             };
+        }
+        getById(id: number): Email {
+            for(let i = 0; i < this.emails.length; i++) {
+                if(this.emails[i].id === id) {
+                    return this.emails[i];
+                }
+            }
+
+            return null;
         }
     }
 

@@ -4,6 +4,7 @@ module Test.Emails {
     'use strict';
 
     export interface IEmailDTO {
+        id: number;
         from: string;
         to: string[];
         cc?: string[];
@@ -11,9 +12,11 @@ module Test.Emails {
         subject: string;
         body: string;
         date: string;
+        parentId?: number;
     }
 
     export class Email {
+        id: number;
         from: string;
         to: string[];
         cc: string[];
@@ -21,16 +24,19 @@ module Test.Emails {
         subject: string;
         body: string;
         date: Date;
+        parentId: number;
 
         constructor() {
         }
 
         protected fillFromDto(dto: IEmailDTO) {
+            this.id = dto.id;
             this.from = dto.from || "";
             this.to = dto.to || [];
             this.subject = dto.subject || "";
             this.body = dto.body || "";
             this.date = new Date();
+            this.parentId = dto.parentId;
 
             this.cc = dto.cc || [];
             this.bcc = dto.bcc || [];

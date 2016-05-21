@@ -12,8 +12,8 @@
             </tr>
             </thead>
             <tbody>
-            <tr ng-repeat="email in listController.emails">
-                <td>{{ email.date }}</td>
+            <tr ng-repeat="email in listController.emails" ng-click="listController.openEmail(email)">
+                <td>{{ email.date | date:"yyyy/MM/dd 'at' h:mma" }}</td>
                 <td>{{ email.from }}</td>
                 <td>{{ email.to }}</td>
                 <td>{{ email.subject }}</td>

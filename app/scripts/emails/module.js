@@ -7,5 +7,6 @@ angular
     .controller('test.emails.listSideBarController', Test.Emails.listSideBarControllerRegistration)
     .controller('test.emails.viewController', Test.Emails.viewControllerRegistration)
     .controller('test.emails.viewSideBarController', Test.Emails.viewSideBarControllerRegistration)
+    .directive('testEmailsFullView', Test.Emails.fullViewDirectiveRegistration)
     .run(Test.Emails.emailsLoaderRunConfig);
 //# sourceMappingURL=module.js.map

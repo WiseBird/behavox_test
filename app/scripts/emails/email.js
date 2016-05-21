@@ -8,11 +8,13 @@ var Test;
             function Email() {
             }
             Email.prototype.fillFromDto = function (dto) {
+                this.id = dto.id;
                 this.from = dto.from || "";
                 this.to = dto.to || [];
                 this.subject = dto.subject || "";
                 this.body = dto.body || "";
                 this.date = new Date();
+                this.parentId = dto.parentId;
                 this.cc = dto.cc || [];
                 this.bcc = dto.bcc || [];
             };

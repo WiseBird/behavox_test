@@ -11,6 +11,7 @@ angular
 
     .controller('test.emails.viewController', Test.Emails.viewControllerRegistration)
     .controller('test.emails.viewSideBarController', Test.Emails.viewSideBarControllerRegistration)
+    .directive('testEmailsFullView', Test.Emails.fullViewDirectiveRegistration)
 
     .run(Test.Emails.emailsLoaderRunConfig)
 ;

@@ -78,8 +78,8 @@ var Test;
             EmailsFilter.prototype.filter = function (emails) {
                 var _this = this;
                 return emails.filter(function (email) {
-                    return _this.bodyToText(email) && _this.subjectToText(email) &&
-                        _this.fromToUsers(email) && _this.toToUsers(email) && _this.ccToUsers(email) && _this.bccToUsers(email);
+                    return (_this.bodyToText(email) || _this.subjectToText(email)) &&
+                        (_this.fromToUsers(email) || _this.toToUsers(email) || _this.ccToUsers(email) || _this.bccToUsers(email));
                 });
             };
             return EmailsFilter;
@@ -107,6 +107,14 @@ var Test;
                     total: emails.length,
                     items: itemsOnPage
                 };
+            };
+            EmailsApi.prototype.getById = function (id) {
+                for (var i = 0; i < this.emails.length; i++) {
+                    if (this.emails[i].id === id) {
+                        return this.emails[i];
+                    }
+                }
+                return null;
             };
             return EmailsApi;
         })();

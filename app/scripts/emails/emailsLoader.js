@@ -10,7 +10,10 @@ var Test;
             'test.emails.api',
             function ($http, appSetings, emailsApi) {
                 $http.get(appSetings.dataUrl).then(function (response) {
-                    var emails = response.data.map(function (x) { return Emails.Email.fromDTO(x); });
+                    var emails = response.data.map(function (x, ind) {
+                        x.id = ind;
+                        return Emails.Email.fromDTO(x);
+                    });
                     emailsApi.setData(emails);
                 });
             }

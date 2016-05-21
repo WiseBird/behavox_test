@@ -1,3 +1,19 @@
-.emails-list-sidebar h2 {
-    margin-top: 0;
+.emails-full-view .emails-full-view_subject {
+    font-size: 20px;
+}
+.emails-full-view .emails-full-view_date {
+    font-size: 10px;
+}
+
+.emails-full-view .emails-full-view_from {
+    font-size: 18px;
+    margin-bottom: 5px;
+}
+
+.emails-full-view .emails-full-view_recipients {
+    font-size: 14px;
+}
+
+.emails-full-view .emails-full-view_body {
+    margin-top: 10px;
 }
