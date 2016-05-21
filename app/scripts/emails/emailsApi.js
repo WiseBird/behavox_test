@@ -86,11 +86,18 @@ var Test;
         })();
         Emails.EmailsFilter = EmailsFilter;
         var EmailsApi = (function () {
-            function EmailsApi() {
-                this.emails = [];
+            function EmailsApi($q) {
+                this.$q = $q;
+                this.emails = null;
+                this.defer = null;
+                this.defer = this.$q.defer();
             }
+            EmailsApi.prototype.ready = function () {
+                return this.defer.promise;
+            };
             EmailsApi.prototype.setData = function (emails) {
-                this.emails.push.apply(this.emails, emails);
+                this.emails = emails;
+                this.defer.resolve(null);
             };
             EmailsApi.prototype.find = function (filter, page, limit) {
                 if (!filter) {
@@ -119,6 +126,7 @@ var Test;
             return EmailsApi;
         })();
         Emails.emailsApiRegistration = [
+            '$q',
             EmailsApi
         ];
     })(Emails = Test.Emails || (Test.Emails = {}));

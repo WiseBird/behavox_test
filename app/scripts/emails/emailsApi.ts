@@ -103,16 +103,27 @@ module Test.Emails {
 
     export interface IEmailsApi {
         setData(emails: Email[]);
+        ready(): ng.IPromise<any>;
 
         find(filter: EmailsFilter, page: number, limit: number): Test.Common.IPagedDataDto<Email>;
         getById(id: number): Email;
     }
 
     class EmailsApi implements IEmailsApi {
-        private emails: Email[] = [];
+        private emails: Email[] = null;
+        private defer: ng.IDeferred<any> = null;
 
+        constructor(private $q: ng.IQService) {
+            this.defer = this.$q.defer<any>();
+        }
+
+        ready(): ng.IPromise<any> {
+            return this.defer.promise;
+        }
         setData(emails: Email[]) {
-            this.emails.push.apply(this.emails, emails);
+            this.emails = emails;
+
+            this.defer.resolve(null);
         }
 
         find(filter: EmailsFilter, page: number, limit: number): Test.Common.IPagedDataDto<Email> {
@@ -147,6 +158,7 @@ module Test.Emails {
     }
 
     export var emailsApiRegistration = [
+        '$q',
         EmailsApi
     ];
 }

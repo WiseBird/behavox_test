@@ -12,7 +12,10 @@ var Test;
                     .state("emails", {
                     url: '/emails',
                     abstract: true,
-                    template: '<ui-view/>'
+                    template: '<ui-view/>',
+                    resolve: {
+                        emails: ['test.emails.api', function (emailsApi) { return emailsApi.ready(); }]
+                    }
                 })
                     .state("emails.list", {
                     parent: 'emails',

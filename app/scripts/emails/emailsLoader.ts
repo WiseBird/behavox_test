@@ -13,6 +13,17 @@ module Test.Emails {
                     x.id = ind;
                     return Email.fromDTO(x);
                 });
+
+                emails.sort((a,b) => {
+                   if(a.date > b.date) {
+                       return -1;
+                   } else if(a.date < b.date) {
+                       return 1;
+                   } else {
+                       return 0;
+                   }
+                });
+
                 emailsApi.setData(emails);
             });
         }

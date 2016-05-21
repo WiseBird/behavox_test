@@ -13,7 +13,7 @@ var Test;
                 this.to = dto.to || [];
                 this.subject = dto.subject || "";
                 this.body = dto.body || "";
-                this.date = new Date();
+                this.date = new Date(dto.date);
                 this.parentId = dto.parentId;
                 this.cc = dto.cc || [];
                 this.bcc = dto.bcc || [];

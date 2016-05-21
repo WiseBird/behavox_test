@@ -11,7 +11,10 @@ module Test.Common {
                 .state("emails", {
                     url: '/emails',
                     abstract: true,
-                    template: '<ui-view/>'
+                    template: '<ui-view/>',
+                    resolve: {
+                        emails: ['test.emails.api', (emailsApi: Emails.IEmailsApi) => emailsApi.ready()]
+                    }
                 })
                     .state("emails.list", {
                         parent: 'emails',
