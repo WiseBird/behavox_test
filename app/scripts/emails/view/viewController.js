@@ -11,12 +11,28 @@ var Test;
                 this.emailApi = emailApi;
                 this.filter = filter;
                 this.parents = [];
+                this.children = [];
                 var emailId = Number(this.$stateParams.id);
                 this.email = this.emailApi.getById(emailId);
+                this.children = this.emailApi.getChildrens(emailId);
                 if (this.email.parentId) {
                     this.parents = this.emailApi.getParents(emailId);
                 }
             }
+            Object.defineProperty(ViewController.prototype, "hasParents", {
+                get: function () {
+                    return Boolean(this.parents && this.parents.length);
+                },
+                enumerable: true,
+                configurable: true
+            });
+            Object.defineProperty(ViewController.prototype, "hasChildren", {
+                get: function () {
+                    return Boolean(this.children && this.children.length);
+                },
+                enumerable: true,
+                configurable: true
+            });
             return ViewController;
         })();
         Emails.viewControllerRegistration = [

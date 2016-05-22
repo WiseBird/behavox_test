@@ -135,6 +135,13 @@ var Test;
                 }
                 return parents;
             };
+            EmailsApi.prototype.getChildrens = function (id) {
+                var message = this.getById(id);
+                if (!message) {
+                    return [];
+                }
+                return this.emails.filter(function (x) { return x.parentId === message.id; });
+            };
             return EmailsApi;
         })();
         Emails.emailsApiRegistration = [

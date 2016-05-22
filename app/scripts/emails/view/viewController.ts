@@ -10,6 +10,7 @@ module Test.Emails {
     class ViewController {
         email: Email;
         parents: Email[] = [];
+        children: Email[] = [];
 
         constructor(public $scope: ng.IScope,
                     public $stateParams: IViewStateParams,
@@ -19,9 +20,17 @@ module Test.Emails {
             var emailId = Number(this.$stateParams.id);
             this.email = this.emailApi.getById(emailId);
 
+            this.children = this.emailApi.getChildrens(emailId);
             if(this.email.parentId) {
                 this.parents = this.emailApi.getParents(emailId);
             }
+        }
+
+        get hasParents(): boolean {
+            return Boolean(this.parents && this.parents.length);
+        }
+        get hasChildren(): boolean {
+            return Boolean(this.children && this.children.length);
         }
     }
 

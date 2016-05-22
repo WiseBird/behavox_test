@@ -51,7 +51,7 @@ var Test;
                 if (bodyStart !== -1) {
                     newDto.body = message.substr(bodyStart).trim();
                 }
-                var headers = message.substring(0, bodyStart).trim();
+                var headers = message.substring(0, bodyStart !== -1 ? bodyStart : message.length).trim();
                 var lines = headers.split("\n").map(function (x) { return x.trim(); });
                 lines.forEach(function (line) {
                     if (!line) {

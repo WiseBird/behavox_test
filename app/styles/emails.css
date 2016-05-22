@@ -66,3 +66,14 @@
 
     margin-top: 10px;
 }
+
+
+.emails-view .emails-view_messages > div {
+    margin: 0;
+}
+
+.emails-view .emails-view_messages .emails-view_messages_header {
+    font-size: 18px;
+    border-bottom: black solid 1px;
+    margin-bottom: 20px;
+}

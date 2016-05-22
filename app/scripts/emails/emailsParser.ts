@@ -67,7 +67,7 @@ module Test.Emails {
                 newDto.body = message.substr(bodyStart).trim();
             }
 
-            var headers = message.substring(0, bodyStart).trim();
+            var headers = message.substring(0, bodyStart !== -1 ? bodyStart : message.length).trim();
             var lines = headers.split("\n").map(x => x.trim());
             lines.forEach(line => {
                 if(!line) {
