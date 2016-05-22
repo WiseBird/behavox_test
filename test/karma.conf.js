@@ -46,6 +46,7 @@ module.exports = function(config) {
       './app/scripts/emails/email.js',
       './app/scripts/emails/emailsApi.js',
       './app/scripts/emails/emailsLoader.js',
+      './app/scripts/emails/emailsParser.js',
       './app/scripts/common/module.js',
       './app/scripts/emails/module.js',
       './app/scripts/app.js',

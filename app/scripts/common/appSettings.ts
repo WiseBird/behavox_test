@@ -5,9 +5,11 @@ module Test.Common {
 
     export interface IAppSettings {
         dataUrl: string;
+        parentMessageDelimiter: string;
     }
 
     export var AppSettings: IAppSettings = {
-        dataUrl: '/email.json'
+        dataUrl: '/email.json',
+        parentMessageDelimiter: '-----Original Message-----'
     }
 }

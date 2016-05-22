@@ -2,6 +2,7 @@
 angular
     .module('test.emails', [])
     .service('test.emails.api', Test.Emails.emailsApiRegistration)
+    .service('test.emails.parser', Test.Emails.emailsParserServiceRegistration)
     .factory('test.emails.filter', Test.Emails.Common.filterServiceRegistration)
     .controller('test.emails.listController', Test.Emails.listControllerRegistration)
     .controller('test.emails.listSideBarController', Test.Emails.listSideBarControllerRegistration)

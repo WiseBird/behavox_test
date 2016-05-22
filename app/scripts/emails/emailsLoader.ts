@@ -7,22 +7,10 @@ module Test.Emails {
         '$http',
         'test.common.appSetings',
         'test.emails.api',
-        function ($http: ng.IHttpService, appSetings: Test.Common.IAppSettings, emailsApi: IEmailsApi) {
+        'test.emails.parser',
+        function ($http: ng.IHttpService, appSetings: Test.Common.IAppSettings, emailsApi: IEmailsApi, parser: IEmailsParser) {
             $http.get(appSetings.dataUrl).then((response: ng.IHttpPromiseCallbackArg<IEmailDTO[]>) => {
-                var emails = response.data.map((x, ind) => {
-                    x.id = ind;
-                    return Email.fromDTO(x);
-                });
-
-                emails.sort((a,b) => {
-                   if(a.date > b.date) {
-                       return -1;
-                   } else if(a.date < b.date) {
-                       return 1;
-                   } else {
-                       return 0;
-                   }
-                });
+                var emails = parser.parse(response.data);
 
                 emailsApi.setData(emails);
             });

@@ -5,7 +5,8 @@ var Test;
     (function (Common) {
         'use strict';
         Common.AppSettings = {
-            dataUrl: '/email.json'
+            dataUrl: '/email.json',
+            parentMessageDelimiter: '-----Original Message-----'
         };
     })(Common = Test.Common || (Test.Common = {}));
 })(Test || (Test = {}));
