@@ -6,10 +6,14 @@ var Test;
         var Common;
         (function (Common) {
             'use strict';
-            function filterService() {
-                return new Emails.EmailsFilter();
+            function filterService(emailsApi) {
+                var filter = new Emails.EmailsFilter();
+                filter.byDateFrom(emailsApi.getMinDate());
+                filter.byDateTo(emailsApi.getMaxDate());
+                return filter;
             }
             Common.filterServiceRegistration = [
+                'test.emails.api',
                 filterService];
         })(Common = Emails.Common || (Emails.Common = {}));
     })(Emails = Test.Emails || (Test.Emails = {}));

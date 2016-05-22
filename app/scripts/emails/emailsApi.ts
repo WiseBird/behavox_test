@@ -102,6 +102,9 @@ module Test.Emails {
         getById(id: number): Email;
         getParents(id: number): Email[];
         getChildrens(id: number): Email[];
+
+        getMinDate(): Date;
+        getMaxDate(): Date;
     }
 
     class EmailsApi implements IEmailsApi {
@@ -180,6 +183,37 @@ module Test.Emails {
             }
 
             return this.emails.filter(x => x.parentId === message.id);
+        }
+
+        getMinDate(): Date {
+            var date: Date = null;
+
+            this.emails.forEach(email => {
+                if(!email.date) {
+                    return;
+                }
+
+                if(!date || date > email.date) {
+                    date = email.date;
+                }
+            });
+
+            return date;
+        }
+        getMaxDate(): Date {
+            var date: Date = null;
+
+            this.emails.forEach(email => {
+                if(!email.date) {
+                    return;
+                }
+
+                if(!date || date < email.date) {
+                    date = email.date;
+                }
+            });
+
+            return date;
         }
     }
 

@@ -7,7 +7,6 @@ var Test;
         var FullViewDirectiveController = (function () {
             function FullViewDirectiveController($scope) {
                 this.$scope = $scope;
-                var i = 1;
             }
             return FullViewDirectiveController;
         })();

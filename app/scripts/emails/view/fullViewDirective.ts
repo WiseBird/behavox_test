@@ -12,7 +12,7 @@ module Test.Emails {
         preview: boolean;
 
         constructor(public $scope: IFullViewDirectiveScope) {
-            var i = 1;
+
         }
     }
 

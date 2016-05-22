@@ -142,6 +142,30 @@ var Test;
                 }
                 return this.emails.filter(function (x) { return x.parentId === message.id; });
             };
+            EmailsApi.prototype.getMinDate = function () {
+                var date = null;
+                this.emails.forEach(function (email) {
+                    if (!email.date) {
+                        return;
+                    }
+                    if (!date || date > email.date) {
+                        date = email.date;
+                    }
+                });
+                return date;
+            };
+            EmailsApi.prototype.getMaxDate = function () {
+                var date = null;
+                this.emails.forEach(function (email) {
+                    if (!email.date) {
+                        return;
+                    }
+                    if (!date || date < email.date) {
+                        date = email.date;
+                    }
+                });
+                return date;
+            };
             return EmailsApi;
         })();
         Emails.emailsApiRegistration = [
