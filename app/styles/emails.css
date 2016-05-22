@@ -16,6 +16,7 @@
 
 .emails-full-view .emails-full-view_body {
     margin-top: 10px;
+    white-space: pre-line;
 }
 
 
