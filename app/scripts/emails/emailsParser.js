@@ -23,18 +23,57 @@ var Test;
             };
             EmailsParser.prototype.extractParentEmails = function (dtos) {
                 var _this = this;
+                var newDtos = [];
+                var lastId = dtos.length;
                 dtos.forEach(function (dto) {
                     if (!dto.body) {
                         return;
                     }
-                    var messages = dto.body.split(_this.appSetings.parentMessageDelimiter);
-                    messages.forEach(function (x) {
-                        x.trim();
-                    });
+                    var messages = dto.body.split(_this.appSetings.parentMessageDelimiter).map(function (x) { return x.trim(); });
                     dto.body = messages[0];
                     for (var i = 1; i < messages.length; i++) {
+                        var message = messages[i];
+                        var newDto = _this.extractParentEmailFromText(message);
+                        newDto.id = lastId + 1;
+                        newDto.parentId = dto.id;
+                        newDtos.push(newDto);
+                        lastId++;
                     }
                 });
+                dtos.push.apply(dtos, newDtos);
+            };
+            EmailsParser.prototype.extractParentEmailFromText = function (message) {
+                var newDto = {};
+                var bodyStart = message.indexOf("\n\n");
+                if (bodyStart !== -1) {
+                    newDto.body = message.substr(bodyStart).trim();
+                }
+                var headers = message.substring(0, bodyStart).trim();
+                var lines = headers.split("\n").map(function (x) { return x.trim(); });
+                lines.forEach(function (line) {
+                    if (!line) {
+                        return;
+                    }
+                    if (line.indexOf("From:") === 0) {
+                        newDto.from = line.substr(5).trim();
+                    }
+                    else if (line.indexOf("Sent:") === 0) {
+                        newDto.date = line.substr(5).trim();
+                    }
+                    else if (line.indexOf("To:") === 0) {
+                        newDto.to = line.substr(3).trim().split(";").map(function (x) { return x.trim(); });
+                    }
+                    else if (line.indexOf("Cc:") === 0) {
+                        newDto.cc = line.substr(3).trim().split(";").map(function (x) { return x.trim(); });
+                    }
+                    else if (line.indexOf("Bcc:") === 0) {
+                        newDto.bcc = line.substr(4).trim().split(";").map(function (x) { return x.trim(); });
+                    }
+                    else if (line.indexOf("Subject:") === 0) {
+                        newDto.subject = line.substr(8).trim();
+                    }
+                });
+                return newDto;
             };
             EmailsParser.prototype.convertDtos = function (dtos) {
                 return dtos.map(function (x, ind) { return Emails.Email.fromDTO(x); });

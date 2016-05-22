@@ -31,21 +31,63 @@ module Test.Emails {
             });
         }
         private extractParentEmails(dtos: IEmailDTO[]) {
+            var newDtos: IEmailDTO[] = [];
+            var lastId = dtos.length;
+
             dtos.forEach((dto) => {
                 if(!dto.body) {
                     return;
                 }
 
-                var messages = dto.body.split(this.appSetings.parentMessageDelimiter);
-                messages.forEach((x) => {
-                    x.trim();
-                });
+                var messages = dto.body.split(this.appSetings.parentMessageDelimiter).map(x => x.trim());
 
                 dto.body = messages[0];
                 for(let i = 1; i < messages.length; i++) {
-                    
+                    var message = messages[i];
+
+                    var newDto = this.extractParentEmailFromText(message);
+                    newDto.id = lastId + 1;
+                    newDto.parentId = dto.id;
+
+                    newDtos.push(newDto);
+
+                    lastId++;
                 }
             });
+
+            dtos.push.apply(dtos, newDtos);
+        }
+        private extractParentEmailFromText(message: string): IEmailDTO {
+            var newDto: IEmailDTO = <any>{};
+
+            var bodyStart = message.indexOf("\n\n");
+            if(bodyStart !== -1) {
+                newDto.body = message.substr(bodyStart).trim();
+            }
+
+            var headers = message.substring(0, bodyStart).trim();
+            var lines = headers.split("\n").map(x => x.trim());
+            lines.forEach(line => {
+                if(!line) {
+                    return;
+                }
+
+                if(line.indexOf("From:") === 0) {
+                    newDto.from = line.substr(5).trim();
+                } else if(line.indexOf("Sent:") === 0) {
+                    newDto.date = line.substr(5).trim();
+                } else if(line.indexOf("To:") === 0) {
+                    newDto.to = line.substr(3).trim().split(";").map(x => x.trim());
+                } else if(line.indexOf("Cc:") === 0) {
+                    newDto.cc = line.substr(3).trim().split(";").map(x => x.trim());
+                } else if(line.indexOf("Bcc:") === 0) {
+                    newDto.bcc = line.substr(4).trim().split(";").map(x => x.trim());
+                } else if(line.indexOf("Subject:") === 0) {
+                    newDto.subject = line.substr(8).trim();
+                }
+            });
+
+            return newDto;
         }
         private convertDtos(dtos: IEmailDTO[]): Email[] {
             return dtos.map((x, ind) => Email.fromDTO(x));

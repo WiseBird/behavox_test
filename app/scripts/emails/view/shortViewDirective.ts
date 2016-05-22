@@ -14,7 +14,7 @@ module Test.Emails {
 
         }
 
-        emailRecipients(): string[] {
+        emailRecipients(): string {
             var result = [];
 
             result = result.concat(this.email.to);
