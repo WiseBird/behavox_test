@@ -11,26 +11,31 @@ module Test.Emails {
         email: Email;
         showIcons: boolean;
 
-        constructor(public $scope: IShortViewDirectiveScope) {
+        recipients: string[];
+        matchedUsers: string[] = [];
 
-        }
+        fromMatched: boolean;
+        matchedRecipients: string[] = [];
+        unmatchedRecipients: string[] = [];
 
-        emailRecipients(): string[] {
-            var result = [];
+        constructor(public $scope: IShortViewDirectiveScope,
+                    public filter: EmailsFilter) {
 
-            result = result.concat(this.email.to);
-            result = result.concat(this.email.cc);
-            result = result.concat(this.email.bcc);
+            this.recipients = this.email.getRecipients();
 
-            // removing duplicates
-            return result.filter(function(item, pos) {
-                return result.indexOf(item) == pos;
-            });
+            this.$scope.$watch(() => this.filter, () => {
+                this.matchedUsers = this.filter.getMatchedUsers(this.email);
+
+                this.fromMatched = this.matchedUsers.indexOf(this.email.from) !== -1;
+                this.matchedRecipients = this.recipients.filter(x => this.matchedUsers.indexOf(x) !== -1);
+                this.unmatchedRecipients = this.recipients.filter(x => this.matchedUsers.indexOf(x) === -1);
+            }, true);
         }
     }
 
     var shortViewDirectiveControllerRegistration = [
         '$scope',
+        'test.emails.filter',
         ShortViewDirectiveController];
 
     function shortViewDirective(): ng.IDirective {

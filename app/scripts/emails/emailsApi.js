@@ -81,6 +81,20 @@ var Test;
                         _this.dateToRange(email);
                 });
             };
+            EmailsFilter.prototype.getMatchedUsers = function (email) {
+                var _this = this;
+                if (!this.users || !this.users.length) {
+                    return [];
+                }
+                var result = {};
+                if (this.users.indexOf(email.from) !== -1) {
+                    result[email.from] = true;
+                }
+                email.to.filter(function (x) { return _this.users.indexOf(x) !== -1; }).forEach(function (x) { result[x] = true; });
+                email.cc.filter(function (x) { return _this.users.indexOf(x) !== -1; }).forEach(function (x) { result[x] = true; });
+                email.bcc.filter(function (x) { return _this.users.indexOf(x) !== -1; }).forEach(function (x) { result[x] = true; });
+                return Object.keys(result);
+            };
             return EmailsFilter;
         })();
         Emails.EmailsFilter = EmailsFilter;

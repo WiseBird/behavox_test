@@ -31,6 +31,19 @@ module Test.Emails {
         constructor() {
         }
 
+        getRecipients(): string[] {
+            var result = [];
+
+            result = result.concat(this.to);
+            result = result.concat(this.cc);
+            result = result.concat(this.bcc);
+
+            // removing duplicates
+            return result.filter(function(item, pos) {
+                return result.indexOf(item) == pos;
+            });
+        }
+
         protected fillFromDto(dto: IEmailDTO) {
             this.id = dto.id;
             this.from = dto.from || "";

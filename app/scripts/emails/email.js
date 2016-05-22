@@ -7,6 +7,16 @@ var Test;
         var Email = (function () {
             function Email() {
             }
+            Email.prototype.getRecipients = function () {
+                var result = [];
+                result = result.concat(this.to);
+                result = result.concat(this.cc);
+                result = result.concat(this.bcc);
+                // removing duplicates
+                return result.filter(function (item, pos) {
+                    return result.indexOf(item) == pos;
+                });
+            };
             Email.prototype.fillFromDto = function (dto) {
                 this.id = dto.id;
                 this.from = dto.from || "";

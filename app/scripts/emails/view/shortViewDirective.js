@@ -5,23 +5,26 @@ var Test;
     (function (Emails) {
         'use strict';
         var ShortViewDirectiveController = (function () {
-            function ShortViewDirectiveController($scope) {
+            function ShortViewDirectiveController($scope, filter) {
+                var _this = this;
                 this.$scope = $scope;
+                this.filter = filter;
+                this.matchedUsers = [];
+                this.matchedRecipients = [];
+                this.unmatchedRecipients = [];
+                this.recipients = this.email.getRecipients();
+                this.$scope.$watch(function () { return _this.filter; }, function () {
+                    _this.matchedUsers = _this.filter.getMatchedUsers(_this.email);
+                    _this.fromMatched = _this.matchedUsers.indexOf(_this.email.from) !== -1;
+                    _this.matchedRecipients = _this.recipients.filter(function (x) { return _this.matchedUsers.indexOf(x) !== -1; });
+                    _this.unmatchedRecipients = _this.recipients.filter(function (x) { return _this.matchedUsers.indexOf(x) === -1; });
+                }, true);
             }
-            ShortViewDirectiveController.prototype.emailRecipients = function () {
-                var result = [];
-                result = result.concat(this.email.to);
-                result = result.concat(this.email.cc);
-                result = result.concat(this.email.bcc);
-                // removing duplicates
-                return result.filter(function (item, pos) {
-                    return result.indexOf(item) == pos;
-                });
-            };
             return ShortViewDirectiveController;
         })();
         var shortViewDirectiveControllerRegistration = [
             '$scope',
+            'test.emails.filter',
             ShortViewDirectiveController];
         function shortViewDirective() {
             return {

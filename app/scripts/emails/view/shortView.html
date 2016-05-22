@@ -17,10 +17,21 @@
     <div class="panel-body">
 
         <div class="row">
-            <div class="col-xs-12 emails-short-view_users">
-                <span class="emails-short-view_from">{{ shortViewController.email.from }}</span>
+            <div class="col-xs-12 emails-short-view_users"
+                 ng-class="{ 'emails-short-view_users--highlited': shortViewController.fromMatched }">
+                <span class="emails-short-view_from"
+                      ng-show="!shortViewController.fromMatched">
+                    {{ shortViewController.email.from }}
+                </span>
+                <span class="label label-warning emails-short-view_from"
+                      ng-show="shortViewController.fromMatched">
+                    {{ shortViewController.email.from }}
+                </span>
                 :
-                <span class="label label-default emails-short-view_recipient" ng-repeat="recipient in shortViewController.emailRecipients()">
+                <span class="label label-warning emails-short-view_recipient" ng-repeat="recipient in shortViewController.matchedRecipients">
+                    {{ recipient }}
+                </span>
+                <span class="label label-default emails-short-view_recipient" ng-repeat="recipient in shortViewController.unmatchedRecipients">
                     {{ recipient }}
                 </span>
             </div>

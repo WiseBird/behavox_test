@@ -91,6 +91,23 @@ module Test.Emails {
                     this.dateToRange(email);
             });
         }
+
+        getMatchedUsers(email: Email): string[] {
+            if(!this.users || !this.users.length) {
+                return [];
+            }
+
+            var result = {};
+            if(this.users.indexOf(email.from) !== -1) {
+                result[email.from] = true;
+            }
+
+            email.to.filter(x => this.users.indexOf(x) !== -1).forEach(x => { result[x] = true });
+            email.cc.filter(x => this.users.indexOf(x) !== -1).forEach(x => { result[x] = true });
+            email.bcc.filter(x => this.users.indexOf(x) !== -1).forEach(x => { result[x] = true });
+
+            return Object.keys(result);
+        }
     }
 
     export interface IEmailsApi {
