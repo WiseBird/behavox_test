@@ -1,5 +1,5 @@
 <div class="emails-short-view panel panel-default">
-    <div class="panel-body">
+    <div class="panel-heading emails-short-view_header">
         <div class="row">
             <div class="col-xs-8 col-lg-9 emails-short-view_subject">
                 <i class="glyphicon glyphicon-transfer"
@@ -13,14 +13,16 @@
                 </span>
             </div>
         </div>
+    </div>
+    <div class="panel-body">
+
         <div class="row">
-            <div class="col-xs-12 emails-short-view_from">
-                From: {{ shortViewController.email.from }}
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-xs-12 emails-short-view_recipients">
-                Resipients: {{ shortViewController.emailRecipients() }}
+            <div class="col-xs-12 emails-short-view_users">
+                <span class="emails-short-view_from">{{ shortViewController.email.from }}</span>
+                :
+                <span class="label label-default emails-short-view_recipient" ng-repeat="recipient in shortViewController.emailRecipients()">
+                    {{ recipient }}
+                </span>
             </div>
         </div>
         <div class="row">

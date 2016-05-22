@@ -35,6 +35,10 @@
     box-shadow: 0px 0px 3px 1px grey;
 }
 
+.emails-short-view .emails-short-view_header {
+    padding-bottom: 0;
+}
+
 .emails-short-view .emails-short-view_subject {
     font-size: 18px;
     margin-bottom: 5px;
@@ -49,16 +53,20 @@
     white-space: nowrap;
 }
 
-.emails-short-view .emails-short-view_from{
+.emails-short-view .emails-short-view_users {
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
 }
 
-.emails-short-view .emails-short-view_recipients {
-    text-overflow: ellipsis;
-    overflow: hidden;
-    white-space: nowrap;
+.emails-short-view .emails-short-view_from {
+    font-size: 18px;
+}
+
+.emails-short-view .emails-short-view_recipient {
+    margin-right: 5px;
+    position: relative;
+    top: -1px;
 }
 
 .emails-short-view .emails-short-view_body {
