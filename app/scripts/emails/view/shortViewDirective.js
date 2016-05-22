@@ -13,7 +13,10 @@ var Test;
                 result = result.concat(this.email.to);
                 result = result.concat(this.email.cc);
                 result = result.concat(this.email.bcc);
-                return result;
+                // removing duplicates
+                return result.filter(function (item, pos) {
+                    return result.indexOf(item) == pos;
+                });
             };
             return ShortViewDirectiveController;
         })();

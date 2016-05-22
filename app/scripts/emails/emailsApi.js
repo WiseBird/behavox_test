@@ -23,17 +23,22 @@ var Test;
                 this.users = users;
                 return this;
             };
-            EmailsFilter.prototype.subjectToText = function (email) {
-                if (!this.text) {
+            EmailsFilter.prototype.checkByTest = function (email) {
+                var _this = this;
+                if (!this.text || !this.text.trim()) {
                     return true;
                 }
-                return email.subject.toLowerCase().indexOf(this.text.toLowerCase()) !== -1;
+                var terms = this.text.trim().split(' ').map(function (x) { return x.trim(); });
+                return terms.every(function (text) {
+                    return _this.subjectToText(email, text) ||
+                        _this.bodyToText(email, text);
+                });
             };
-            EmailsFilter.prototype.bodyToText = function (email) {
-                if (!this.text) {
-                    return true;
-                }
-                return email.body.toLowerCase().indexOf(this.text.toLowerCase()) !== -1;
+            EmailsFilter.prototype.subjectToText = function (email, text) {
+                return email.subject.toLowerCase().indexOf(text.toLowerCase()) !== -1;
+            };
+            EmailsFilter.prototype.bodyToText = function (email, text) {
+                return email.body.toLowerCase().indexOf(text.toLowerCase()) !== -1;
             };
             EmailsFilter.prototype.checkByUsers = function (email) {
                 var _this = this;
@@ -71,7 +76,7 @@ var Test;
             EmailsFilter.prototype.filter = function (emails) {
                 var _this = this;
                 return emails.filter(function (email) {
-                    return (_this.bodyToText(email) || _this.subjectToText(email)) &&
+                    return _this.checkByTest(email) &&
                         _this.checkByUsers(email) &&
                         _this.dateToRange(email);
                 });

@@ -29,19 +29,22 @@ module Test.Emails {
             return this;
         }
 
-        private subjectToText(email: Email): boolean {
-            if(!this.text) {
+        private checkByTest(email: Email) {
+            if(!this.text || !this.text.trim()) {
                 return true;
             }
 
-            return email.subject.toLowerCase().indexOf(this.text.toLowerCase()) !== -1;
+            var terms = this.text.trim().split(' ').map(x => x.trim());
+            return terms.every(text => {
+                return this.subjectToText(email, text) ||
+                    this.bodyToText(email, text)
+            });
         }
-        private bodyToText(email: Email): boolean {
-            if(!this.text) {
-                return true;
-            }
-
-            return email.body.toLowerCase().indexOf(this.text.toLowerCase()) !== -1;
+        private subjectToText(email: Email, text: string): boolean {
+            return email.subject.toLowerCase().indexOf(text.toLowerCase()) !== -1;
+        }
+        private bodyToText(email: Email, text: string): boolean {
+            return email.body.toLowerCase().indexOf(text.toLowerCase()) !== -1;
         }
 
         private checkByUsers(email: Email): boolean {
@@ -83,7 +86,7 @@ module Test.Emails {
 
         filter(emails: Email[]): Email[] {
             return emails.filter((email) => {
-                return (this.bodyToText(email) || this.subjectToText(email)) &&
+                return this.checkByTest(email) &&
                     this.checkByUsers(email) &&
                     this.dateToRange(email);
             });
