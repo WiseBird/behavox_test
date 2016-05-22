@@ -9,6 +9,7 @@ module Test.Emails {
 
         constructor(public $scope: ng.IScope,
                     public $state: angular.ui.IStateService,
+                    public $window: ng.IWindowService,
                     public emailsApi: IEmailsApi,
                     public filter: EmailsFilter) {
 
@@ -24,8 +25,16 @@ module Test.Emails {
             return data.items;
         }
 
-        openEmail(email: Email) {
-            this.$state.go('emails.view', {id: email.id});
+        openEmail($event: ng.IAngularEvent, email: Email) {
+            var event = <JQueryMouseEventObject><any>$event;
+            if(event.which === 2) {
+                var url = this.$state.href('emails.view', {id: email.id});
+                this.$window.open(url, '_blank');
+
+                $event.preventDefault();
+            } else {
+                this.$state.go('emails.view', {id: email.id});
+            }
         }
 
         canLoadNextPage(): boolean {
@@ -44,6 +53,7 @@ module Test.Emails {
     export var listControllerRegistration = [
         '$scope',
         '$state',
+        '$window',
         'test.emails.api',
         'test.emails.filter',
         ListController];

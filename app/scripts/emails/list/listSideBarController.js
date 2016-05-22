@@ -14,6 +14,9 @@ var Test;
                 this.dateFromOpened = false;
                 this.dateToOptions = { minDate: null };
                 this.dateToOpened = false;
+                if (filter.users && filter.users.length) {
+                    this.user = filter.users[0];
+                }
                 $scope.$watch(function () { return _this.user; }, function () {
                     if (!_this.user) {
                         _this.filter.byUsers([]);

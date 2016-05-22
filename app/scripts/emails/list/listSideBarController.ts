@@ -14,6 +14,10 @@ module Test.Emails {
         constructor(public $scope: ng.IScope,
                     public filter: EmailsFilter) {
 
+            if(filter.users && filter.users.length) {
+                this.user = filter.users[0];
+            }
+
             $scope.$watch(() => this.user, () => {
                 if(!this.user) {
                     this.filter.byUsers([]);

@@ -7,7 +7,7 @@
         <test-emails-short-view ng-repeat="email in listController.emails"
                                 email="email"
                                 show-icons="true"
-                                ng-click="listController.openEmail(email)">
+                                ng-mouseup="listController.openEmail($event, email)">
         </test-emails-short-view>
     </div>
 </div>

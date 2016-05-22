@@ -5,10 +5,11 @@ var Test;
     (function (Emails) {
         'use strict';
         var ListController = (function () {
-            function ListController($scope, $state, emailsApi, filter) {
+            function ListController($scope, $state, $window, emailsApi, filter) {
                 var _this = this;
                 this.$scope = $scope;
                 this.$state = $state;
+                this.$window = $window;
                 this.emailsApi = emailsApi;
                 this.filter = filter;
                 this.$scope.$watch(function () { return _this.filter; }, this.reloadEmails.bind(this), true);
@@ -22,8 +23,16 @@ var Test;
                 this.pagination = data.pagination;
                 return data.items;
             };
-            ListController.prototype.openEmail = function (email) {
-                this.$state.go('emails.view', { id: email.id });
+            ListController.prototype.openEmail = function ($event, email) {
+                var event = $event;
+                if (event.which === 2) {
+                    var url = this.$state.href('emails.view', { id: email.id });
+                    this.$window.open(url, '_blank');
+                    $event.preventDefault();
+                }
+                else {
+                    this.$state.go('emails.view', { id: email.id });
+                }
             };
             ListController.prototype.canLoadNextPage = function () {
                 return this.pagination && this.pagination.page < this.pagination.pages;
@@ -40,6 +49,7 @@ var Test;
         Emails.listControllerRegistration = [
             '$scope',
             '$state',
+            '$window',
             'test.emails.api',
             'test.emails.filter',
             ListController];
