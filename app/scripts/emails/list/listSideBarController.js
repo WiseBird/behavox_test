@@ -5,26 +5,16 @@ var Test;
     (function (Emails) {
         'use strict';
         var ListSideBarController = (function () {
-            function ListSideBarController($scope, filter) {
+            function ListSideBarController($scope, filter, emailsApi) {
                 var _this = this;
                 this.$scope = $scope;
                 this.filter = filter;
-                this.user = "";
+                this.emailsApi = emailsApi;
                 this.dateFromOptions = { maxDate: null };
                 this.dateFromOpened = false;
                 this.dateToOptions = { minDate: null };
                 this.dateToOpened = false;
-                if (filter.users && filter.users.length) {
-                    this.user = filter.users[0];
-                }
-                $scope.$watch(function () { return _this.user; }, function () {
-                    if (!_this.user) {
-                        _this.filter.byUsers([]);
-                    }
-                    else {
-                        _this.filter.byUsers([_this.user]);
-                    }
-                });
+                this.users = this.emailsApi.getUsers();
                 $scope.$watch(function () { return _this.filter.dateFrom; }, function () {
                     _this.dateToOptions.minDate = _this.filter.dateFrom;
                 });
@@ -37,6 +27,7 @@ var Test;
         Emails.listSideBarControllerRegistration = [
             '$scope',
             'test.emails.filter',
+            'test.emails.api',
             ListSideBarController];
     })(Emails = Test.Emails || (Test.Emails = {}));
 })(Test || (Test = {}));

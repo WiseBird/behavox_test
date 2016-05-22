@@ -7,9 +7,13 @@
 				   ng-model="listSideBarController.filter.text">
 		</div>
 		<div class="form-group">
-			<label for="user">User</label>
-			<input type="text" class="form-control" id="user" placeholder="User"
-				   ng-model="listSideBarController.user">
+			<label>User</label>
+			<ui-select multiple ng-model="listSideBarController.filter.users">
+				<ui-select-match>{{$item}}</ui-select-match>
+				<ui-select-choices repeat="value in listSideBarController.users | filter: $select.search">
+					<div ng-bind-html="value | highlight: $select.search"></div>
+				</ui-select-choices>
+			</ui-select>
 		</div>
 		<div class="form-group">
 			<label for="dateFrom">Date from</label>

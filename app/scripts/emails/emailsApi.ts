@@ -44,33 +44,29 @@ module Test.Emails {
             return email.body.toLowerCase().indexOf(this.text.toLowerCase()) !== -1;
         }
 
-        private fromToUsers(email: Email): boolean {
+        private checkByUsers(email: Email): boolean {
             if(!this.users || !this.users.length) {
                 return true;
             }
 
-            return this.users.some(x => email.from.indexOf(x) !== -1);
+            return this.users.every(user => {
+                return this.fromToUser(email, user) ||
+                    this.toToUser(email, user) ||
+                    this.ccToUser(email, user) ||
+                    this.bccToUser(email, user)
+            });
         }
-        private toToUsers(email: Email): boolean {
-            if(!this.users || !this.users.length) {
-                return true;
-            }
-
-            return this.users.some(x => email.to.some(y => y.indexOf(x) !== -1));
+        private fromToUser(email: Email, user: string): boolean {
+             return email.from === user;
         }
-        private ccToUsers(email: Email): boolean {
-            if(!this.users || !this.users.length) {
-                return true;
-            }
-
-            return this.users.some(x => email.cc.some(y => y.indexOf(x) !== -1));
+        private toToUser(email: Email, user: string): boolean {
+            return email.to.some(y => y === user);
         }
-        private bccToUsers(email: Email): boolean {
-            if(!this.users || !this.users.length) {
-                return true;
-            }
-
-            return this.users.some(x => email.bcc.some(y => y.indexOf(x) !== -1));
+        private ccToUser(email: Email, user: string): boolean {
+            return email.cc.some(y => y === user)
+        }
+        private bccToUser(email: Email, user: string): boolean {
+            return email.bcc.some(y => y === user)
         }
 
         private dateToRange(email: Email): boolean {
@@ -88,7 +84,7 @@ module Test.Emails {
         filter(emails: Email[]): Email[] {
             return emails.filter((email) => {
                 return (this.bodyToText(email) || this.subjectToText(email)) &&
-                    (this.fromToUsers(email) || this.toToUsers(email) || this.ccToUsers(email) || this.bccToUsers(email)) &&
+                    this.checkByUsers(email) &&
                     this.dateToRange(email);
             });
         }
@@ -97,6 +93,8 @@ module Test.Emails {
     export interface IEmailsApi {
         setData(emails: Email[]);
         ready(): ng.IPromise<any>;
+
+        getUsers(): string[];
 
         find(filter: EmailsFilter, page: number, limit: number): Test.Common.IPagedData<Email>;
         getById(id: number): Email;
@@ -109,6 +107,7 @@ module Test.Emails {
 
     class EmailsApi implements IEmailsApi {
         private emails: Email[] = null;
+        private users: string[] = null;
         private defer: ng.IDeferred<any> = null;
 
         constructor(private $q: ng.IQService) {
@@ -121,7 +120,40 @@ module Test.Emails {
         setData(emails: Email[]) {
             this.emails = emails;
 
+            this.collectUsers();
+
             this.defer.resolve(null);
+        }
+        private collectUsers() {
+            var users = {};
+
+            this.emails.forEach(email => {
+                if(email.from) {
+                    users[email.from] = true;
+                }
+
+                if(email.to) {
+                    email.to.forEach(user => {
+                        users[user] = true;
+                    });
+                }
+                if(email.cc) {
+                    email.cc.forEach(user => {
+                        users[user] = true;
+                    });
+                }
+                if(email.bcc) {
+                    email.bcc.forEach(user => {
+                        users[user] = true;
+                    });
+                }
+            });
+
+            this.users = Object.keys(users);
+        }
+
+        getUsers(): string[] {
+            return this.users;
         }
 
         find(filter: EmailsFilter, page: number, limit: number): Test.Common.IPagedData<Email> {

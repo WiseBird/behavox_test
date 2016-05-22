@@ -35,29 +35,29 @@ var Test;
                 }
                 return email.body.toLowerCase().indexOf(this.text.toLowerCase()) !== -1;
             };
-            EmailsFilter.prototype.fromToUsers = function (email) {
+            EmailsFilter.prototype.checkByUsers = function (email) {
+                var _this = this;
                 if (!this.users || !this.users.length) {
                     return true;
                 }
-                return this.users.some(function (x) { return email.from.indexOf(x) !== -1; });
+                return this.users.every(function (user) {
+                    return _this.fromToUser(email, user) ||
+                        _this.toToUser(email, user) ||
+                        _this.ccToUser(email, user) ||
+                        _this.bccToUser(email, user);
+                });
             };
-            EmailsFilter.prototype.toToUsers = function (email) {
-                if (!this.users || !this.users.length) {
-                    return true;
-                }
-                return this.users.some(function (x) { return email.to.some(function (y) { return y.indexOf(x) !== -1; }); });
+            EmailsFilter.prototype.fromToUser = function (email, user) {
+                return email.from === user;
             };
-            EmailsFilter.prototype.ccToUsers = function (email) {
-                if (!this.users || !this.users.length) {
-                    return true;
-                }
-                return this.users.some(function (x) { return email.cc.some(function (y) { return y.indexOf(x) !== -1; }); });
+            EmailsFilter.prototype.toToUser = function (email, user) {
+                return email.to.some(function (y) { return y === user; });
             };
-            EmailsFilter.prototype.bccToUsers = function (email) {
-                if (!this.users || !this.users.length) {
-                    return true;
-                }
-                return this.users.some(function (x) { return email.bcc.some(function (y) { return y.indexOf(x) !== -1; }); });
+            EmailsFilter.prototype.ccToUser = function (email, user) {
+                return email.cc.some(function (y) { return y === user; });
+            };
+            EmailsFilter.prototype.bccToUser = function (email, user) {
+                return email.bcc.some(function (y) { return y === user; });
             };
             EmailsFilter.prototype.dateToRange = function (email) {
                 if (this.dateFrom && email.date < this.dateFrom) {
@@ -72,7 +72,7 @@ var Test;
                 var _this = this;
                 return emails.filter(function (email) {
                     return (_this.bodyToText(email) || _this.subjectToText(email)) &&
-                        (_this.fromToUsers(email) || _this.toToUsers(email) || _this.ccToUsers(email) || _this.bccToUsers(email)) &&
+                        _this.checkByUsers(email) &&
                         _this.dateToRange(email);
                 });
             };
@@ -83,6 +83,7 @@ var Test;
             function EmailsApi($q) {
                 this.$q = $q;
                 this.emails = null;
+                this.users = null;
                 this.defer = null;
                 this.defer = this.$q.defer();
             }
@@ -91,7 +92,35 @@ var Test;
             };
             EmailsApi.prototype.setData = function (emails) {
                 this.emails = emails;
+                this.collectUsers();
                 this.defer.resolve(null);
+            };
+            EmailsApi.prototype.collectUsers = function () {
+                var users = {};
+                this.emails.forEach(function (email) {
+                    if (email.from) {
+                        users[email.from] = true;
+                    }
+                    if (email.to) {
+                        email.to.forEach(function (user) {
+                            users[user] = true;
+                        });
+                    }
+                    if (email.cc) {
+                        email.cc.forEach(function (user) {
+                            users[user] = true;
+                        });
+                    }
+                    if (email.bcc) {
+                        email.bcc.forEach(function (user) {
+                            users[user] = true;
+                        });
+                    }
+                });
+                this.users = Object.keys(users);
+            };
+            EmailsApi.prototype.getUsers = function () {
+                return this.users;
             };
             EmailsApi.prototype.find = function (filter, page, limit) {
                 if (!filter) {

@@ -4,9 +4,12 @@
 
 angular
     .module('test', [
+        'ngSanitize',
+
         'ui.router',
         'ui.bootstrap',
         'infinite-scroll',
+        'ui.select',
 
         'test.common',
         'test.emails'

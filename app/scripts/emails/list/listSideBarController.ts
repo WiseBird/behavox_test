@@ -4,7 +4,7 @@ module Test.Emails {
     'use strict';
 
     class ListSideBarController {
-        user: string = "";
+        users: string[];
 
         dateFromOptions = { maxDate: null };
         dateFromOpened: boolean = false;
@@ -12,19 +12,10 @@ module Test.Emails {
         dateToOpened: boolean = false;
 
         constructor(public $scope: ng.IScope,
-                    public filter: EmailsFilter) {
+                    public filter: EmailsFilter,
+                    public emailsApi: IEmailsApi) {
 
-            if(filter.users && filter.users.length) {
-                this.user = filter.users[0];
-            }
-
-            $scope.$watch(() => this.user, () => {
-                if(!this.user) {
-                    this.filter.byUsers([]);
-                } else {
-                    this.filter.byUsers([this.user]);
-                }
-            });
+            this.users = this.emailsApi.getUsers();
 
             $scope.$watch(() => this.filter.dateFrom, () => {
                this.dateToOptions.minDate = this.filter.dateFrom;
@@ -38,5 +29,6 @@ module Test.Emails {
     export var listSideBarControllerRegistration = [
         '$scope',
         'test.emails.filter',
+        'test.emails.api',
         ListSideBarController];
 }
