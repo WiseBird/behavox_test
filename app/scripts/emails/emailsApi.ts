@@ -100,6 +100,7 @@ module Test.Emails {
 
         find(filter: EmailsFilter, page: number, limit: number): Test.Common.IPagedData<Email>;
         getById(id: number): Email;
+        getParents(id: number): Email[];
     }
 
     class EmailsApi implements IEmailsApi {
@@ -149,6 +150,26 @@ module Test.Emails {
             }
 
             return null;
+        }
+
+        getParents(id: number): Email[] {
+            var message = this.getById(id);
+            if(!message) {
+                return [];
+            }
+
+            var parents: Email[] = [];
+            while(message.parentId) {
+                var parent = this.getById(message.parentId);
+                if(!parent) {
+                    break;
+                }
+
+                parents.push(parent);
+                message = parent;
+            }
+
+            return parents;
         }
     }
 

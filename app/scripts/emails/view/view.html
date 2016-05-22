@@ -1,3 +1,7 @@
 <div class="emails-view" ng-controller="test.emails.viewController as viewController">
     <test-emails-full-view email="viewController.email"></test-emails-full-view>
+
+    <test-emails-short-view ng-repeat="email in viewController.parents"
+                            email="email">
+    </test-emails-short-view>
 </div>

@@ -14,6 +14,7 @@ var Test;
                 this.subject = dto.subject || "";
                 this.body = dto.body || "";
                 this.date = new Date(dto.date);
+                this.hasChildren = dto.hasChildren;
                 this.parentId = dto.parentId;
                 this.cc = dto.cc || [];
                 this.bcc = dto.bcc || [];

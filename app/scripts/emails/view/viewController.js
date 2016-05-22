@@ -10,8 +10,12 @@ var Test;
                 this.$stateParams = $stateParams;
                 this.emailApi = emailApi;
                 this.filter = filter;
+                this.parents = [];
                 var emailId = Number(this.$stateParams.id);
                 this.email = this.emailApi.getById(emailId);
+                if (this.email.parentId) {
+                    this.parents = this.emailApi.getParents(emailId);
+                }
             }
             return ViewController;
         })();

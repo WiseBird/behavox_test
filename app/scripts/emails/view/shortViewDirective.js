@@ -29,7 +29,8 @@ var Test;
                 controllerAs: 'shortViewController',
                 scope: {},
                 bindToController: {
-                    email: "="
+                    email: "=",
+                    showIcons: "="
                 }
             };
         }

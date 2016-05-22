@@ -9,6 +9,7 @@ module Test.Emails {
 
     class ShortViewDirectiveController {
         email: Email;
+        showIcons: boolean;
 
         constructor(public $scope: IShortViewDirectiveScope) {
 
@@ -38,7 +39,8 @@ module Test.Emails {
             controllerAs: 'shortViewController',
             scope: {},
             bindToController: {
-                email: "="
+                email: "=",
+                showIcons: "="
             }
         };
     }

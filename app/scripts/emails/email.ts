@@ -12,6 +12,7 @@ module Test.Emails {
         subject: string;
         body: string;
         date: string;
+        hasChildren: boolean;
         parentId?: number;
     }
 
@@ -24,6 +25,7 @@ module Test.Emails {
         subject: string;
         body: string;
         date: Date;
+        hasChildren: boolean;
         parentId: number;
 
         constructor() {
@@ -36,6 +38,7 @@ module Test.Emails {
             this.subject = dto.subject || "";
             this.body = dto.body || "";
             this.date = new Date(dto.date);
+            this.hasChildren = dto.hasChildren;
             this.parentId = dto.parentId;
 
             this.cc = dto.cc || [];

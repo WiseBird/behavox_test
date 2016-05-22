@@ -31,12 +31,15 @@ var Test;
                     }
                     var messages = dto.body.split(_this.appSetings.parentMessageDelimiter).map(function (x) { return x.trim(); });
                     dto.body = messages[0];
+                    var prevDto = dto;
                     for (var i = 1; i < messages.length; i++) {
                         var message = messages[i];
                         var newDto = _this.extractParentEmailFromText(message);
                         newDto.id = lastId + 1;
-                        newDto.parentId = dto.id;
+                        newDto.hasChildren = true;
                         newDtos.push(newDto);
+                        prevDto.parentId = newDto.id;
+                        prevDto = newDto;
                         lastId++;
                     }
                 });

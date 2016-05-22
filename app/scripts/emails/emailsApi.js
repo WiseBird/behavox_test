@@ -119,6 +119,22 @@ var Test;
                 }
                 return null;
             };
+            EmailsApi.prototype.getParents = function (id) {
+                var message = this.getById(id);
+                if (!message) {
+                    return [];
+                }
+                var parents = [];
+                while (message.parentId) {
+                    var parent = this.getById(message.parentId);
+                    if (!parent) {
+                        break;
+                    }
+                    parents.push(parent);
+                    message = parent;
+                }
+                return parents;
+            };
             return EmailsApi;
         })();
         Emails.emailsApiRegistration = [

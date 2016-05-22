@@ -40,17 +40,19 @@ module Test.Emails {
                 }
 
                 var messages = dto.body.split(this.appSetings.parentMessageDelimiter).map(x => x.trim());
-
                 dto.body = messages[0];
+
+                var prevDto = dto;
                 for(let i = 1; i < messages.length; i++) {
                     var message = messages[i];
 
                     var newDto = this.extractParentEmailFromText(message);
                     newDto.id = lastId + 1;
-                    newDto.parentId = dto.id;
-
+                    newDto.hasChildren = true;
                     newDtos.push(newDto);
 
+                    prevDto.parentId = newDto.id;
+                    prevDto = newDto;
                     lastId++;
                 }
             });

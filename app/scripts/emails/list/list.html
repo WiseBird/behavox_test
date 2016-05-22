@@ -6,6 +6,7 @@
          infinite-scroll-disabled="!listController.canLoadNextPage()">
         <test-emails-short-view ng-repeat="email in listController.emails"
                                 email="email"
+                                show-icons="true"
                                 ng-click="listController.openEmail(email)">
         </test-emails-short-view>
     </div>
