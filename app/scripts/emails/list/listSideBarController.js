@@ -10,6 +10,10 @@ var Test;
                 this.$scope = $scope;
                 this.filter = filter;
                 this.user = "";
+                this.dateFromOptions = { maxDate: null };
+                this.dateFromOpened = false;
+                this.dateToOptions = { minDate: null };
+                this.dateToOpened = false;
                 $scope.$watch(function () { return _this.user; }, function () {
                     if (!_this.user) {
                         _this.filter.byUsers([]);
@@ -17,6 +21,12 @@ var Test;
                     else {
                         _this.filter.byUsers([_this.user]);
                     }
+                });
+                $scope.$watch(function () { return _this.filter.dateFrom; }, function () {
+                    _this.dateToOptions.minDate = _this.filter.dateFrom;
+                });
+                $scope.$watch(function () { return _this.filter.dateTo; }, function () {
+                    _this.dateFromOptions.maxDate = _this.filter.dateTo;
                 });
             }
             return ListSideBarController;

@@ -11,5 +11,41 @@
 			<input type="text" class="form-control" id="user" placeholder="User"
 				   ng-model="listSideBarController.user">
 		</div>
+		<div class="form-group">
+			<label for="dateFrom">Date from</label>
+			<div class="input-group datepicker">
+				<input type="text" class="form-control" id="dateFrom" readonly="readonly"
+					   ng-model="listSideBarController.filter.dateFrom"
+					   uib-datepicker-popup="yyyy/MM/dd"
+					   is-open="listSideBarController.dateFromOpened"
+					   datepicker-options="listSideBarController.dateFromOptions"
+					   popup-placement="right"
+					   datepicker-append-to-body="true" />
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-default"
+									ng-click="listSideBarController.dateFromOpened = true">
+								<i class="glyphicon glyphicon-calendar"></i>
+							</button>
+                        </span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="dateTo">Date to</label>
+			<div class="input-group datepicker">
+				<input type="text" class="form-control" id="dateTo" readonly="readonly"
+					   ng-model="listSideBarController.filter.dateTo"
+					   uib-datepicker-popup="yyyy/MM/dd"
+					   is-open="listSideBarController.dateToOpened"
+					   datepicker-options="listSideBarController.dateToOptions"
+					   popup-placement="right"
+					   datepicker-append-to-body="true" />
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-default"
+									ng-click="listSideBarController.dateToOpened = true">
+								<i class="glyphicon glyphicon-calendar"></i>
+							</button>
+                        </span>
+			</div>
+		</div>
 	</form>
 </div>

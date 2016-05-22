@@ -3,7 +3,7 @@
 angular
     .module('test', [
     'ui.router',
-    //'ui.bootstrap',
+    'ui.bootstrap',
     'infinite-scroll',
     'test.common',
     'test.emails'

@@ -4,11 +4,11 @@ module Test.Emails {
     'use strict';
 
     export class EmailsFilter {
-        private text: string;
-        private dateFrom: Date;
-        private dateTo: Date;
+        text: string;
+        dateFrom: Date;
+        dateTo: Date;
 
-        private users: string[];
+        users: string[];
 
         byTest(text: string): this & EmailsFilter {
             this.text = text;
@@ -73,10 +73,23 @@ module Test.Emails {
             return this.users.some(x => email.bcc.some(y => y.indexOf(x) !== -1));
         }
 
+        private dateToRange(email: Email): boolean {
+            if(this.dateFrom && email.date < this.dateFrom) {
+                return false;
+            }
+
+            if(this.dateTo && email.date > this.dateTo) {
+                return false;
+            }
+
+            return true;
+        }
+
         filter(emails: Email[]): Email[] {
             return emails.filter((email) => {
                 return (this.bodyToText(email) || this.subjectToText(email)) &&
-                    (this.fromToUsers(email) || this.toToUsers(email) || this.ccToUsers(email) || this.bccToUsers(email));
+                    (this.fromToUsers(email) || this.toToUsers(email) || this.ccToUsers(email) || this.bccToUsers(email)) &&
+                    this.dateToRange(email);
             });
         }
     }

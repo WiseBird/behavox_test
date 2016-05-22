@@ -59,11 +59,21 @@ var Test;
                 }
                 return this.users.some(function (x) { return email.bcc.some(function (y) { return y.indexOf(x) !== -1; }); });
             };
+            EmailsFilter.prototype.dateToRange = function (email) {
+                if (this.dateFrom && email.date < this.dateFrom) {
+                    return false;
+                }
+                if (this.dateTo && email.date > this.dateTo) {
+                    return false;
+                }
+                return true;
+            };
             EmailsFilter.prototype.filter = function (emails) {
                 var _this = this;
                 return emails.filter(function (email) {
                     return (_this.bodyToText(email) || _this.subjectToText(email)) &&
-                        (_this.fromToUsers(email) || _this.toToUsers(email) || _this.ccToUsers(email) || _this.bccToUsers(email));
+                        (_this.fromToUsers(email) || _this.toToUsers(email) || _this.ccToUsers(email) || _this.bccToUsers(email)) &&
+                        _this.dateToRange(email);
                 });
             };
             return EmailsFilter;

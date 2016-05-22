@@ -6,6 +6,11 @@ module Test.Emails {
     class ListSideBarController {
         user: string = "";
 
+        dateFromOptions = { maxDate: null };
+        dateFromOpened: boolean = false;
+        dateToOptions = { minDate: null };
+        dateToOpened: boolean = false;
+
         constructor(public $scope: ng.IScope,
                     public filter: EmailsFilter) {
 
@@ -15,6 +20,13 @@ module Test.Emails {
                 } else {
                     this.filter.byUsers([this.user]);
                 }
+            });
+
+            $scope.$watch(() => this.filter.dateFrom, () => {
+               this.dateToOptions.minDate = this.filter.dateFrom;
+            });
+            $scope.$watch(() => this.filter.dateTo, () => {
+               this.dateFromOptions.maxDate = this.filter.dateTo;
             });
         }
     }
