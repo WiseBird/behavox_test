@@ -8,18 +8,34 @@
     </div>
     <div class="panel-body">
         <div class="emails-full-view_from">
-            {{ fullViewController.email.from }}
+            <span ng-class="{ 'label label-warning': fullViewController.isUserMatched(fullViewController.email.from) }">
+                {{ fullViewController.email.from }}
+            </span>
         </div>
         <div class="emails-full-view_recipients">
-            To: {{ fullViewController.email.to }}
+            To:
+            <span class="label"
+                  ng-repeat="recipient in fullViewController.email.to"
+                  ng-class="{ 'label-warning': fullViewController.isUserMatched(recipient), 'label-default': !fullViewController.isUserMatched(recipient)}">
+                {{ recipient }}
+            </span>
         </div>
         <div class="emails-full-view_recipients"
              ng-if="fullViewController.email.cc && fullViewController.email.cc.length">
-            Cc: {{ fullViewController.email.cc }}
+            Cc:
+            <span class="label"
+                  ng-repeat="recipient in fullViewController.email.cc"
+                  ng-class="{ 'label-warning': fullViewController.isUserMatched(recipient), 'label-default': !fullViewController.isUserMatched(recipient)}">
+                {{ recipient }}
+            </span>
         </div>
         <div class="emails-full-view_recipients"
              ng-if="fullViewController.email.bcc && fullViewController.email.bcc.length">
-            Bcc: {{ fullViewController.email.bcc }}
+            Bcc: 
+            <span class="label"
+                  ng-repeat="recipient in fullViewController.email.bcc"
+                  ng-class="{ 'label-warning': fullViewController.isUserMatched(recipient), 'label-default': !fullViewController.isUserMatched(recipient)}">
+                {{ recipient }}
         </div>
 
         <div class="emails-full-view_body">

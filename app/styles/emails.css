@@ -1,3 +1,7 @@
+.emails-full-view .label {
+    margin-right: 5px;
+}
+
 .emails-full-view .emails-full-view_subject {
     font-size: 20px;
 }
@@ -6,12 +10,17 @@
 }
 
 .emails-full-view .emails-full-view_from {
-    font-size: 18px;
     margin-bottom: 5px;
+}
+.emails-full-view .emails-full-view_from span {
+    font-size: 18px;
 }
 
 .emails-full-view .emails-full-view_recipients {
     font-size: 14px;
+}
+.emails-full-view .emails-full-view_recipients span {
+    display: inline-block;
 }
 
 .emails-full-view .emails-full-view_body {

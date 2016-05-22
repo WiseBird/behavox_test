@@ -11,13 +11,24 @@ module Test.Emails {
         email: Email;
         preview: boolean;
 
-        constructor(public $scope: IFullViewDirectiveScope) {
+        matchedUsers: string[] = [];
 
+        constructor(public $scope: IFullViewDirectiveScope,
+                    public filter: EmailsFilter) {
+
+            this.$scope.$watch(() => this.filter, () => {
+                this.matchedUsers = this.filter.getMatchedUsers(this.email);
+            }, true);
+        }
+
+        isUserMatched(user: string): boolean {
+            return this.matchedUsers.indexOf(user) !== -1;
         }
     }
 
     var fullViewDirectiveControllerRegistration = [
         '$scope',
+        'test.emails.filter',
         FullViewDirectiveController];
 
     function fullViewDirective(): ng.IDirective {
