@@ -3,14 +3,19 @@
 module Test.Emails {
     'use strict';
 
+    interface IEmailVM {
+        email: Email;
+        expanded: boolean;
+    }
+
     interface IViewStateParams extends angular.ui.IStateParamsService {
         id: string;
     }
 
     class ViewController {
         email: Email;
-        parents: Email[] = [];
-        children: Email[] = [];
+        parents: IEmailVM[] = [];
+        children: IEmailVM[] = [];
 
         constructor(public $scope: ng.IScope,
                     public $stateParams: IViewStateParams,
@@ -20,9 +25,9 @@ module Test.Emails {
             var emailId = Number(this.$stateParams.id);
             this.email = this.emailApi.getById(emailId);
 
-            this.children = this.emailApi.getChildrens(emailId);
+            this.children = this.emailApi.getChildrens(emailId).map(email => <IEmailVM>{ email: email, expanded: false});
             if(this.email.parentId) {
-                this.parents = this.emailApi.getParents(emailId);
+                this.parents = this.emailApi.getParents(emailId).map(email => <IEmailVM>{ email: email, expanded: false});
             }
         }
 
@@ -31,6 +36,10 @@ module Test.Emails {
         }
         get hasChildren(): boolean {
             return Boolean(this.children && this.children.length);
+        }
+
+        toggle(emailVM: IEmailVM) {
+            emailVM.expanded = !emailVM.expanded;
         }
     }
 

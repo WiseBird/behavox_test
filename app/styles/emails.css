@@ -19,6 +19,7 @@
 }
 
 
+
 .emails-short-view {
     -webkit-touch-callout: none; /* iOS Safari */
     -webkit-user-select: none;   /* Chrome/Safari/Opera */
@@ -68,6 +69,7 @@
 }
 
 
+
 .emails-view .emails-view_messages > div {
     margin: 0;
 }
@@ -76,4 +78,20 @@
     font-size: 18px;
     border-bottom: black solid 1px;
     margin-bottom: 20px;
+}
+
+
+
+.emails-full-view--preview:hover {
+    box-shadow: 0px 0px 3px 1px grey;
+}
+.emails-full-view--preview {
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none;   /* Chrome/Safari/Opera */
+    -khtml-user-select: none;    /* Konqueror */
+    -moz-user-select: none;      /* Firefox */
+    -ms-user-select: none;       /* Internet Explorer/Edge */
+    user-select: none;           /* Non-prefixed version, currently
+                                  not supported by any browser */
+    cursor: pointer;
 }

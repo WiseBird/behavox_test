@@ -23,7 +23,8 @@ var Test;
                 controllerAs: 'fullViewController',
                 scope: {},
                 bindToController: {
-                    email: "="
+                    email: "=",
+                    preview: "="
                 }
             };
         }

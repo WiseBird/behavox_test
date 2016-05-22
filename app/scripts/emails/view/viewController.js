@@ -14,9 +14,9 @@ var Test;
                 this.children = [];
                 var emailId = Number(this.$stateParams.id);
                 this.email = this.emailApi.getById(emailId);
-                this.children = this.emailApi.getChildrens(emailId);
+                this.children = this.emailApi.getChildrens(emailId).map(function (email) { return { email: email, expanded: false }; });
                 if (this.email.parentId) {
-                    this.parents = this.emailApi.getParents(emailId);
+                    this.parents = this.emailApi.getParents(emailId).map(function (email) { return { email: email, expanded: false }; });
                 }
             }
             Object.defineProperty(ViewController.prototype, "hasParents", {
@@ -33,6 +33,9 @@ var Test;
                 enumerable: true,
                 configurable: true
             });
+            ViewController.prototype.toggle = function (emailVM) {
+                emailVM.expanded = !emailVM.expanded;
+            };
             return ViewController;
         })();
         Emails.viewControllerRegistration = [

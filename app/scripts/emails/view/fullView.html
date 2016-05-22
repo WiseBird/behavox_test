@@ -1,4 +1,5 @@
-<div class="emails-full-view panel panel-default">
+<div class="emails-full-view panel panel-default"
+     ng-class="{ 'emails-full-view--preview': fullViewController.preview}">
     <div class="panel-heading">
         <div class="emails-full-view_subject">{{ fullViewController.email.subject }}</div>
         <div class="emails-full-view_date">

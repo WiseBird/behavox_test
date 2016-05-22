@@ -9,6 +9,7 @@ module Test.Emails {
 
     class FullViewDirectiveController {
         email: Email;
+        preview: boolean;
 
         constructor(public $scope: IFullViewDirectiveScope) {
             var i = 1;
@@ -28,7 +29,8 @@ module Test.Emails {
             controllerAs: 'fullViewController',
             scope: {},
             bindToController: {
-                email: "="
+                email: "=",
+                preview: "="
             }
         };
     }

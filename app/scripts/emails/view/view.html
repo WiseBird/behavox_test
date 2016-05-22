@@ -7,18 +7,26 @@
             <div class="emails-view_messages_header">
                 Original messages
             </div>
-            <test-emails-short-view ng-repeat="email in viewController.parents"
-                                    email="email">
-            </test-emails-short-view>
+            <div ng-repeat="emailVM in viewController.parents"
+                 ng-click="viewController.toggle(emailVM)">
+                <test-emails-full-view email="emailVM.email" preview="true" ng-if="emailVM.expanded">
+                </test-emails-full-view>
+                <test-emails-short-view email="emailVM.email" ng-if="!emailVM.expanded">
+                </test-emails-short-view>
+            </div>
         </div>
         <div ng-class="{ 'col-md-6': viewController.hasParents, 'col-md-12': !viewController.hasParents }"
              ng-show="viewController.hasChildren">
             <div class="emails-view_messages_header">
                 Replies
             </div>
-            <test-emails-short-view ng-repeat="email in viewController.children"
-                                    email="email">
-            </test-emails-short-view>
+            <div ng-repeat="emailVM in viewController.children"
+                 ng-click="viewController.toggle(emailVM)">
+                <test-emails-full-view email="emailVM.email" preview="true" ng-if="emailVM.expanded">
+                </test-emails-full-view>
+                <test-emails-short-view email="emailVM.email" ng-if="!emailVM.expanded">
+                </test-emails-short-view>
+            </div>
         </div>
     </div>
 </div>
