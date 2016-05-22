@@ -4,11 +4,18 @@
     <div class="row emails-view_messages">
         <div ng-class="{ 'col-md-6': viewController.hasChildren, 'col-md-12': !viewController.hasChildren }"
              ng-show="viewController.hasParents">
+
             <div class="emails-view_messages_header">
                 Original messages
             </div>
-            <div ng-repeat="emailVM in viewController.parents"
+
+            <div class="emails-view_message" ng-repeat="emailVM in viewController.parents"
                  ng-click="viewController.toggle(emailVM)">
+
+                <a ui-sref="emails.view({id: emailVM.email.id})" class="emails-view_message_open">
+                    <i class="glyphicon glyphicon-share-alt"></i>
+                </a>
+
                 <test-emails-full-view email="emailVM.email" preview="true" ng-if="emailVM.expanded">
                 </test-emails-full-view>
                 <test-emails-short-view email="emailVM.email" ng-if="!emailVM.expanded">
@@ -17,11 +24,18 @@
         </div>
         <div ng-class="{ 'col-md-6': viewController.hasParents, 'col-md-12': !viewController.hasParents }"
              ng-show="viewController.hasChildren">
+
             <div class="emails-view_messages_header">
                 Replies
             </div>
-            <div ng-repeat="emailVM in viewController.children"
+
+            <div class="emails-view_message" ng-repeat="emailVM in viewController.children"
                  ng-click="viewController.toggle(emailVM)">
+
+                <a ui-sref="emails.view({id: emailVM.email.id})" class="emails-view_message_open">
+                    <i class="glyphicon glyphicon-share-alt"></i>
+                </a>
+
                 <test-emails-full-view email="emailVM.email" preview="true" ng-if="emailVM.expanded">
                 </test-emails-full-view>
                 <test-emails-short-view email="emailVM.email" ng-if="!emailVM.expanded">

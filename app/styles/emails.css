@@ -35,7 +35,7 @@
 }
 
 .emails-short-view .emails-short-view_subject {
-    font-size: 16px;
+    font-size: 18px;
     margin-bottom: 5px;
 
     text-overflow: ellipsis;
@@ -74,10 +74,24 @@
     margin: 0;
 }
 
-.emails-view .emails-view_messages .emails-view_messages_header {
+.emails-view .emails-view_messages_header {
     font-size: 18px;
     border-bottom: black solid 1px;
     margin-bottom: 20px;
+}
+
+.emails-view .emails-view_message {
+    position: relative;
+}
+
+.emails-view .emails-view_message_open {
+    position: absolute;
+    right: 0;
+    top: 0;
+    padding: 5px;
+    background-color: #AAA;
+    border-radius: 0 5px 0 5px;
+    z-index: 1;
 }
 
 
