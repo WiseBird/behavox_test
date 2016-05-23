@@ -18,7 +18,7 @@
         <div class="emails-full-view_recipients">
             To:
             <span class="label"
-                  ng-repeat="recipient in fullViewController.email.to"
+                  ng-repeat="recipient in fullViewController.email.to track by $index"
                   ng-class="{ 'label-warning': fullViewController.isUserMatched(recipient), 'label-default': !fullViewController.isUserMatched(recipient)}">
                 {{ recipient }}
             </span>
@@ -27,7 +27,7 @@
              ng-if="fullViewController.email.cc && fullViewController.email.cc.length">
             Cc:
             <span class="label"
-                  ng-repeat="recipient in fullViewController.email.cc"
+                  ng-repeat="recipient in fullViewController.email.cc track by $index"
                   ng-class="{ 'label-warning': fullViewController.isUserMatched(recipient), 'label-default': !fullViewController.isUserMatched(recipient)}">
                 {{ recipient }}
             </span>
@@ -36,7 +36,7 @@
              ng-if="fullViewController.email.bcc && fullViewController.email.bcc.length">
             Bcc: 
             <span class="label"
-                  ng-repeat="recipient in fullViewController.email.bcc"
+                  ng-repeat="recipient in fullViewController.email.bcc track by $index"
                   ng-class="{ 'label-warning': fullViewController.isUserMatched(recipient), 'label-default': !fullViewController.isUserMatched(recipient)}">
                 {{ recipient }}
             </span>
