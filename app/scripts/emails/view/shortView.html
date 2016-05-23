@@ -1,14 +1,14 @@
 <div class="emails-short-view panel panel-default">
     <div class="panel-heading emails-short-view_header">
         <div class="row">
-            <div class="col-xs-8 col-lg-9 emails-short-view_subject">
+            <div class="col-xs-8 col-lg-10 emails-short-view_subject">
                 <i class="glyphicon glyphicon-transfer"
                    title="Conversation. Message has replies or is a reply itself."
                    ng-show="shortViewController.showIcons && (shortViewController.email.parentId || shortViewController.email.hasChildren)"></i>
                 <span ng-repeat="part in shortViewController.subjectMatching track by $index"
                       ng-class="{ 'highlighted': $index % 2 }">{{ part }}</span>
             </div>
-            <div class="col-xs-4 col-lg-3 emails-short-view_date">
+            <div class="col-xs-4 col-lg-2 emails-short-view_date">
                 <span class="">
                 {{ shortViewController.email.date | date:"yyyy/MM/dd 'at' h:mma" }}
                 </span>
