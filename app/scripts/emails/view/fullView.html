@@ -1,7 +1,10 @@
 <div class="emails-full-view panel panel-default"
      ng-class="{ 'emails-full-view--preview': fullViewController.preview}">
     <div class="panel-heading">
-        <div class="emails-full-view_subject">{{ fullViewController.email.subject }}</div>
+        <div class="emails-full-view_subject">
+            <span ng-repeat="part in fullViewController.subjectMatching track by $index"
+                  ng-class="{ 'highlighted': $index % 2 }">{{ part }}</span>
+        </div>
         <div class="emails-full-view_date">
             {{ fullViewController.email.date | date:"yyyy/MM/dd 'at' h:mma" }}
         </div>
@@ -36,10 +39,12 @@
                   ng-repeat="recipient in fullViewController.email.bcc"
                   ng-class="{ 'label-warning': fullViewController.isUserMatched(recipient), 'label-default': !fullViewController.isUserMatched(recipient)}">
                 {{ recipient }}
+            </span>
         </div>
 
         <div class="emails-full-view_body">
-            {{ fullViewController.email.body }}
+            <span ng-repeat="part in fullViewController.bodyMatching track by $index"
+                  ng-class="{ 'highlighted': $index % 2 }">{{ part }}</span>
         </div>
     </div>
 </div>

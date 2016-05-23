@@ -10,8 +10,12 @@ var Test;
                 this.$scope = $scope;
                 this.filter = filter;
                 this.matchedUsers = [];
+                this.subjectMatching = [];
+                this.bodyMatching = [];
                 this.$scope.$watch(function () { return _this.filter; }, function () {
                     _this.matchedUsers = _this.filter.getMatchedUsers(_this.email);
+                    _this.subjectMatching = _this.filter.getMatchedSubject(_this.email);
+                    _this.bodyMatching = _this.filter.getMatchedBody(_this.email);
                 }, true);
             }
             FullViewDirectiveController.prototype.isUserMatched = function (user) {

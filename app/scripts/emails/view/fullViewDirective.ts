@@ -12,12 +12,16 @@ module Test.Emails {
         preview: boolean;
 
         matchedUsers: string[] = [];
+        subjectMatching: string[] = [];
+        bodyMatching: string[] = [];
 
         constructor(public $scope: IFullViewDirectiveScope,
                     public filter: EmailsFilter) {
 
             this.$scope.$watch(() => this.filter, () => {
                 this.matchedUsers = this.filter.getMatchedUsers(this.email);
+                this.subjectMatching = this.filter.getMatchedSubject(this.email);
+                this.bodyMatching = this.filter.getMatchedBody(this.email);
             }, true);
         }
 
