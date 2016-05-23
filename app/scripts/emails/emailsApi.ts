@@ -3,18 +3,21 @@
 module Test.Emails {
     'use strict';
 
+    interface IFilterTextMatch {
+        start: number;
+        end: number;
+    }
+
     export class EmailsFilter {
         text: string;
         dateFrom: Date;
         dateTo: Date;
-
         users: string[];
 
         byTest(text: string): this & EmailsFilter {
             this.text = text;
             return this;
         }
-
         byDateFrom(dateFrom: Date): this & EmailsFilter {
             this.dateFrom = dateFrom;
             return this;
@@ -23,7 +26,6 @@ module Test.Emails {
             this.dateTo = dateTo;
             return this;
         }
-
         byUsers(users: string[]): this & EmailsFilter {
             this.users = users;
             return this;
@@ -92,6 +94,11 @@ module Test.Emails {
             });
         }
 
+        /**
+         * Returns users (sender or recipients) that were directly matched by filter. If filter is empty any email will be accepted but this method will return empty list.
+         * @param email
+         * @returns list of users
+         */
         getMatchedUsers(email: Email): string[] {
             if(!this.users || !this.users.length) {
                 return [];
@@ -108,6 +115,84 @@ module Test.Emails {
 
             return Object.keys(result);
         }
+
+        /**
+         * Splits the subject in matched/unmatched parts. First part is unmatched one, if string matched from start then first part is empty string.
+         * @param email
+         * @returns unmatched and matched
+         */
+        getMatchedSubject(email: Email): string[] {
+            var matches = this.collectTextMatches(email.subject);
+
+            return this.splitStringByMatches(email.subject, matches);
+        }
+        /**
+         * Splits the body in matched/unmatched parts. First part is unmatched one, if string matched from start then first part is empty string.
+         * @param email
+         * @returns unmatched and matched
+         */
+        getMatchedBody(email: Email): string[] {
+            var matches = this.collectTextMatches(email.body);
+
+            return this.splitStringByMatches(email.body, matches);
+        }
+        private collectTextMatches(str: string): IFilterTextMatch[] {
+            if(!this.text || !this.text.trim()) {
+                return [];
+            }
+
+            var matches: IFilterTextMatch[] = [];
+
+            var terms = this.text.trim().split(' ').map(x => x.trim());
+            str = str.toLowerCase();
+            terms.forEach(term => {
+                term = term.toLowerCase();
+
+                var index = -1;
+                while(true) {
+                    index = str.indexOf(term, index + 1);
+                    if(index === -1) {
+                        break;
+                    }
+
+                    matches.push({start: index, end: index + term.length});
+                }
+            });
+
+            this.mergeMatches(matches);
+
+            return matches;
+        }
+        private mergeMatches(matches: IFilterTextMatch[]) {
+            matches.sort((x,y) => x.start - y.start);
+
+            for(let i = 0; i < matches.length - 1; i++) {
+                var match = matches[i];
+                var nextMatch = matches[i+1];
+
+                var nextMatchCanBeMergedIntoCurrent = nextMatch.start >= match.start && nextMatch.start <= match.end;
+                if(nextMatchCanBeMergedIntoCurrent) {
+                    match.end = Math.max(match.end, nextMatch.end);
+                    matches.splice(i+1, 1);
+                    i--;
+                }
+            }
+        }
+        private splitStringByMatches(str: string, matches: IFilterTextMatch[]): string[] {
+            matches.sort((x,y) => x.start - y.start);
+
+            var result = [];
+            var index = 0;
+            matches.forEach(match => {
+                result.push(str.substring(index, match.start));
+                result.push(str.substring(match.start, match.end));
+
+                index = match.end;
+            });
+            result.push(str.substring(index));
+
+            return result;
+        }
     }
 
     export interface IEmailsApi {
@@ -119,7 +204,7 @@ module Test.Emails {
         find(filter: EmailsFilter, page: number, limit: number): Test.Common.IPagedData<Email>;
         getById(id: number): Email;
         getParents(id: number): Email[];
-        getChildrens(id: number): Email[];
+        getChildren(id: number): Email[];
 
         getMinDate(): Date;
         getMaxDate(): Date;
@@ -227,8 +312,7 @@ module Test.Emails {
 
             return parents;
         }
-
-        getChildrens(id: number): Email[] {
+        getChildren(id: number): Email[] {
             var message = this.getById(id);
             if(!message) {
                 return [];

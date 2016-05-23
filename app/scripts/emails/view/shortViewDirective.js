@@ -12,12 +12,16 @@ var Test;
                 this.matchedUsers = [];
                 this.matchedRecipients = [];
                 this.unmatchedRecipients = [];
+                this.subjectMatching = [];
+                this.bodyMatching = [];
                 this.recipients = this.email.getRecipients();
                 this.$scope.$watch(function () { return _this.filter; }, function () {
                     _this.matchedUsers = _this.filter.getMatchedUsers(_this.email);
                     _this.fromMatched = _this.matchedUsers.indexOf(_this.email.from) !== -1;
                     _this.matchedRecipients = _this.recipients.filter(function (x) { return _this.matchedUsers.indexOf(x) !== -1; });
                     _this.unmatchedRecipients = _this.recipients.filter(function (x) { return _this.matchedUsers.indexOf(x) === -1; });
+                    _this.subjectMatching = _this.filter.getMatchedSubject(_this.email);
+                    _this.bodyMatching = _this.filter.getMatchedBody(_this.email);
                 }, true);
             }
             return ShortViewDirectiveController;

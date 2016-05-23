@@ -67,10 +67,6 @@
     overflow: hidden;
     white-space: nowrap;
 }
-.emails-short-view .emails-short-view_users.emails-short-view_users--highlited {
-    padding-bottom: 6px;
-    padding-top: 6px;
-}
 
 .emails-short-view .emails-short-view_from {
     font-size: 18px;
@@ -130,4 +126,10 @@
     user-select: none;           /* Non-prefixed version, currently
                                   not supported by any browser */
     cursor: pointer;
+}
+
+
+
+span.highlighted {
+    color: #f0ad4e;
 }

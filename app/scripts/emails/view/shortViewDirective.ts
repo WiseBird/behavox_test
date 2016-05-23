@@ -18,6 +18,9 @@ module Test.Emails {
         matchedRecipients: string[] = [];
         unmatchedRecipients: string[] = [];
 
+        subjectMatching: string[] = [];
+        bodyMatching: string[] = [];
+
         constructor(public $scope: IShortViewDirectiveScope,
                     public filter: EmailsFilter) {
 
@@ -29,6 +32,9 @@ module Test.Emails {
                 this.fromMatched = this.matchedUsers.indexOf(this.email.from) !== -1;
                 this.matchedRecipients = this.recipients.filter(x => this.matchedUsers.indexOf(x) !== -1);
                 this.unmatchedRecipients = this.recipients.filter(x => this.matchedUsers.indexOf(x) === -1);
+
+                this.subjectMatching = this.filter.getMatchedSubject(this.email);
+                this.bodyMatching = this.filter.getMatchedBody(this.email);
             }, true);
         }
     }

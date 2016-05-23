@@ -25,7 +25,7 @@ module Test.Emails {
             var emailId = Number(this.$stateParams.id);
             this.email = this.emailApi.getById(emailId);
 
-            this.children = this.emailApi.getChildrens(emailId).map(email => <IEmailVM>{ email: email, expanded: false});
+            this.children = this.emailApi.getChildren(emailId).map(email => <IEmailVM>{ email: email, expanded: false});
             if(this.email.parentId) {
                 this.parents = this.emailApi.getParents(emailId).map(email => <IEmailVM>{ email: email, expanded: false});
             }

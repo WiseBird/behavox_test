@@ -8,7 +8,7 @@
     </div>
     <div class="panel-body">
         <div class="emails-full-view_from">
-            <span ng-class="{ 'label label-warning': fullViewController.isUserMatched(fullViewController.email.from) }">
+            <span ng-class="{ 'highlighted': fullViewController.isUserMatched(fullViewController.email.from) }">
                 {{ fullViewController.email.from }}
             </span>
         </div>

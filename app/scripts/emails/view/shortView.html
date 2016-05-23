@@ -5,7 +5,8 @@
                 <i class="glyphicon glyphicon-transfer"
                    title="Conversation. Message has replies or is a reply itself."
                    ng-show="shortViewController.showIcons && (shortViewController.email.parentId || shortViewController.email.hasChildren)"></i>
-                {{ shortViewController.email.subject }}
+                <span ng-repeat="part in shortViewController.subjectMatching track by $index"
+                      ng-class="{ 'highlighted': $index % 2 }">{{ part }}</span>
             </div>
             <div class="col-xs-4 col-lg-3 emails-short-view_date">
                 <span class="">
@@ -17,14 +18,9 @@
     <div class="panel-body">
 
         <div class="row">
-            <div class="col-xs-12 emails-short-view_users"
-                 ng-class="{ 'emails-short-view_users--highlited': shortViewController.fromMatched }">
+            <div class="col-xs-12 emails-short-view_users">
                 <span class="emails-short-view_from"
-                      ng-show="!shortViewController.fromMatched">
-                    {{ shortViewController.email.from }}
-                </span>
-                <span class="label label-warning emails-short-view_from"
-                      ng-show="shortViewController.fromMatched">
+                      ng-class="{ 'highlighted': shortViewController.fromMatched }">
                     {{ shortViewController.email.from }}
                 </span>
                 :
@@ -38,7 +34,11 @@
         </div>
         <div class="row">
             <div class="col-xs-12 emails-short-view_body">
-                {{ shortViewController.email.body }}
+                <span ng-repeat="part in shortViewController.bodyMatching track by $index"
+                      ng-class="{ 'highlighted': $index % 2 }">{{
+                            ($index === 0 && shortViewController.bodyMatching.length > 1) ?
+                                (( part.length > 10 ? '...' : '') + part.substr(part.length - 10)) :
+                                part }}</span>
             </div>
         </div>
     </div>

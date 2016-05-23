@@ -14,7 +14,7 @@ var Test;
                 this.children = [];
                 var emailId = Number(this.$stateParams.id);
                 this.email = this.emailApi.getById(emailId);
-                this.children = this.emailApi.getChildrens(emailId).map(function (email) { return { email: email, expanded: false }; });
+                this.children = this.emailApi.getChildren(emailId).map(function (email) { return { email: email, expanded: false }; });
                 if (this.email.parentId) {
                     this.parents = this.emailApi.getParents(emailId).map(function (email) { return { email: email, expanded: false }; });
                 }

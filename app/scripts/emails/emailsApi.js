@@ -81,6 +81,11 @@ var Test;
                         _this.dateToRange(email);
                 });
             };
+            /**
+             * Returns users (sender or recipients) that were directly matched by filter. If filter is empty any email will be accepted but this method will return empty list.
+             * @param email
+             * @returns list of users
+             */
             EmailsFilter.prototype.getMatchedUsers = function (email) {
                 var _this = this;
                 if (!this.users || !this.users.length) {
@@ -94,6 +99,70 @@ var Test;
                 email.cc.filter(function (x) { return _this.users.indexOf(x) !== -1; }).forEach(function (x) { result[x] = true; });
                 email.bcc.filter(function (x) { return _this.users.indexOf(x) !== -1; }).forEach(function (x) { result[x] = true; });
                 return Object.keys(result);
+            };
+            /**
+             * Splits the subject in matched/unmatched parts. First part is unmatched one, if string matched from start then first part is empty string.
+             * @param email
+             * @returns unmatched and matched
+             */
+            EmailsFilter.prototype.getMatchedSubject = function (email) {
+                var matches = this.collectTextMatches(email.subject);
+                return this.splitStringByMatches(email.subject, matches);
+            };
+            /**
+             * Splits the body in matched/unmatched parts. First part is unmatched one, if string matched from start then first part is empty string.
+             * @param email
+             * @returns unmatched and matched
+             */
+            EmailsFilter.prototype.getMatchedBody = function (email) {
+                var matches = this.collectTextMatches(email.body);
+                return this.splitStringByMatches(email.body, matches);
+            };
+            EmailsFilter.prototype.collectTextMatches = function (str) {
+                if (!this.text || !this.text.trim()) {
+                    return [];
+                }
+                var matches = [];
+                var terms = this.text.trim().split(' ').map(function (x) { return x.trim(); });
+                str = str.toLowerCase();
+                terms.forEach(function (term) {
+                    term = term.toLowerCase();
+                    var index = -1;
+                    while (true) {
+                        index = str.indexOf(term, index + 1);
+                        if (index === -1) {
+                            break;
+                        }
+                        matches.push({ start: index, end: index + term.length });
+                    }
+                });
+                this.mergeMatches(matches);
+                return matches;
+            };
+            EmailsFilter.prototype.mergeMatches = function (matches) {
+                matches.sort(function (x, y) { return x.start - y.start; });
+                for (var i = 0; i < matches.length - 1; i++) {
+                    var match = matches[i];
+                    var nextMatch = matches[i + 1];
+                    var nextMatchCanBeMergedIntoCurrent = nextMatch.start >= match.start && nextMatch.start <= match.end;
+                    if (nextMatchCanBeMergedIntoCurrent) {
+                        match.end = Math.max(match.end, nextMatch.end);
+                        matches.splice(i + 1, 1);
+                        i--;
+                    }
+                }
+            };
+            EmailsFilter.prototype.splitStringByMatches = function (str, matches) {
+                matches.sort(function (x, y) { return x.start - y.start; });
+                var result = [];
+                var index = 0;
+                matches.forEach(function (match) {
+                    result.push(str.substring(index, match.start));
+                    result.push(str.substring(match.start, match.end));
+                    index = match.end;
+                });
+                result.push(str.substring(index));
+                return result;
             };
             return EmailsFilter;
         })();
@@ -183,7 +252,7 @@ var Test;
                 }
                 return parents;
             };
-            EmailsApi.prototype.getChildrens = function (id) {
+            EmailsApi.prototype.getChildren = function (id) {
                 var message = this.getById(id);
                 if (!message) {
                     return [];
